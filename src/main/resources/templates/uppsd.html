@@ -1,0 +1,413 @@
+<!doctype html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+ <head>
+	<meta charset="UTF-8">
+	<meta name="Generator" content="EditPlus®">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+	<meta name="renderer" content="webkit">
+    <meta content="歪秀购物, 购物, 大家电, 手机" name="keywords">
+    <meta content="歪秀购物，购物商城。" name="description">
+	<title>修改密码</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/springboot-web/theme/icon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/base.css">
+	<link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/home.css">
+	<link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/member.css">
+	
+	<link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/login.css">
+
+     <script src="/springboot-web/theme/jquery-1.10.2.js"></script>
+     <script src="/springboot-web/theme/dialog.js"></script>
+
+
+    <script type="text/javascript" src="/springboot-web/theme/js/jquery.js"></script>
+    <script type="text/javascript">
+         (function(a){
+             a.fn.hoverClass=function(b){
+                 var a=this;
+                 a.each(function(c){
+                     a.eq(c).hover(function(){
+                         $(this).addClass(b)
+                     },function(){
+                         $(this).removeClass(b)
+                     })
+                 });
+                 return a
+             };
+         })(jQuery);
+
+         $(function(){
+             $("#pc-nav").hoverClass("current");
+         });
+    </script>
+
+         <script type="text/javascript">
+         function check(){
+
+             var matchResult=true;
+             var oldpassword=document.getElementById("oldpassword").value;//通过id获取需要验证的表单元素的值
+             var password=document.getElementById("password").value;//通过id获取需要验证的表单元素的值
+        	   var repassword=document.getElementById("repassword").value;//通过id获取需要验证的表单元素的值
+             var yanzheng=document.getElementById("yanzheng").value;
+             if(oldpassword!=""){
+
+                 $.ajax(
+                     {
+                         url :"http://localhost:8080/springboot-web/VerificationOldPassword",
+                         async:false,
+                         data :{oldpassword:oldpassword},
+                         type: "POST",
+                         cache:false,
+                         success: function (data)
+                         {
+                             if(data=="1111"){
+                                 document.getElementById("yanzheng").value="通过";
+                                 matchResult=true;
+                                 if(password==""||oldpassword==""||repassword==""){
+                                     alert("密码不能为空！");
+                                     matchResult=false;
+                                 }
+                                 if(password!=repassword){
+                                     alert("两次确认密码不同！");
+                                     document.getElementById("password").value="";
+                                     document.getElementById("repassword").value="";
+                                     matchResult=false;
+                                 }
+
+                                 if(password==oldpassword){
+                                     alert("新密码不可以与旧密码一致!请重新输入!");
+                                     document.getElementById("password").value="";
+                                     matchResult=false;
+                                 }
+                                 if(document.getElementById("readme").checked){
+
+                                 }else{
+                                     alert("请同意相关协议！");
+                                     matchResult=false;
+                                 }
+
+
+                             }else  if(data=="2222"){
+                                 alert("您的旧密码输入错误") ;
+                                 document.getElementById("oldpassword").value="";
+                                 matchResult=false;
+
+
+
+
+                             }
+                         } ,
+                         error: function(data){
+                             alert("错误") ;
+                             matchResult=false;
+                         }
+                     });
+
+                 return matchResult;
+
+             }
+
+        	}
+    </script>
+
+
+ </head>
+ <body>
+
+<!--- header begin-->
+<!--- header begin-->
+<header id="pc-header">
+    <div class="BHeader">
+        <div class="yNavIndex">
+            <ul class="BHeaderl">
+                <li>
+                    <div th:if="${session.existUser}==null">
+                        <a href="/springboot-web/Login" style="color:#ea7bde;">请登录</a>
+                    </div>
+
+                </li>
+
+                <li>
+                    <div th:if="${session.existUser}!=null">
+                        <em style="color:#ea3ca5;" th:text="${session.existUser.nickname}" >您好:默认用户 </em>
+                    </div>
+
+                </li>
+
+                <li>
+                    <div th:if="${session.existUser}!=null">
+                        <a href="/springboot-web/RemoveLogin"><em style="color:#ea3345;">退出</em></a>
+                    </div>
+                </li>
+            <li class="headerul">|</li>
+                <li><a href="register.html">免费注册</a> </li>
+                <li class="headerul">|</li>
+                <li><a href="my-d.html">订单查询</a> </li>
+                <li class="headerul">|</li>
+                <li><a href="my-s.html">我的收藏</a> </li>
+                <li class="headerul">|</li>
+                <li id="pc-nav" class="menu"><a href="my-user.html" class="tit">我的商城</a>
+                    <div class="subnav">
+                        <a href="/springboot-web/PersonalCenter" >个人中心</a>
+                        <a href="/springboot-web/OrdersManagement" >订单管理</a>
+                        <a href="/springboot-web/PersonalCenter">地址管理</a>
+                    </div>
+                </li>
+                <li class="headerul">|</li>
+                <li id="pc-nav1" class="menu"><a href="#" class="tit M-iphone">手机悦商城</a>
+                   <div class="subnav">
+                       <a href="#"><img src="/springboot-web/theme/icon/ewm.png" width="115" height="115" title="扫一扫，有惊喜！"></a>
+                   </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container clearfix">
+        <div class="header-logo fl"><h1><a href="#"><img src="/springboot-web/theme/icon/logo.png"></a> </h1></div>
+        <div class="member-title fl"><h2></h2></div>
+        <div class="head-form fl">
+            <form class="clearfix">
+                <input type="text" class="search-text" accesskey="" id="key" autocomplete="off"  placeholder="洗衣机">
+                <button class="button" onClick="search('key');return false;">搜索</button>
+            </form>
+            <div class="words-text clearfix">
+                <a href="#" class="red">1元秒爆</a>
+                <a href="#">低至五折</a>
+                <a href="#">农用物资</a>
+                <a href="#">买一赠一</a>
+                <a href="#">佳能相机</a>
+                <a href="#">稻香村月饼</a>
+                <a href="#">服装城</a>
+            </div>
+        </div>
+
+    </div>
+</header>
+<!-- header End -->
+
+<div class="containers"><div class="pc-nav-item"><a href="#">首页</a> &gt; <a href="#">修改密码 </a></div></div>
+
+<!-- 商城快讯 begin -->
+<section id="member">
+    <div class="member-center clearfix">
+        <div class="member-left fl">
+            <div class="member-apart clearfix">
+                <div class="fl"><a href="#"><img th:src="@{/theme/user/{picture}.jpg(picture=${session.existUser.image})}"></a></div>
+                <div class="fl">
+                    <p>用户名：</p>
+                    <p th:if="${session.existUser.nickname}!=null"><em style="color:#ea1f59;" th:text="${session.existUser.nickname}" >您好:默认用户 </em></p>
+                    <p>邮箱：</p>
+                    <p th:if="${session.existUser.email}!=null"><em style="color:#ea1f59;" th:text="${session.existUser.email}" >您好:默认邮箱 </em></p>
+                </div>
+            </div>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+
+
+
+
+
+
+            <div class="member-lists">
+                <dl>
+                    <dt>我的商城</dt>
+                    <dd><a href="/springboot-web/OrdersManagement">我的订单</a></dd>
+                    <dd><a href="#">我的收藏</a></dd>
+                    <dd><a href="/springboot-web/PersonalCenter">账户安全</a></dd>
+                    <dd><a href="#">我的评价</a></dd>
+                    <dd><a href="#">地址管理</a></dd>
+                </dl>
+                <dl>
+                    <dt>客户服务</dt>
+                    <dd><a href="#">退货申请</a></dd>
+                    <dd><a href="#">退货/退款记录</a></dd>
+                </dl>
+                <dl>
+                    <dt>我的消息</dt>
+                    <dd class="cur"><a href="#">商城快讯</a></dd>
+                    <dd><a href="#">帮助中心</a></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="member-right fr">
+            <div class="member-head">
+                <div class="member-heels fl"><h2>账户安全</h2></div>
+            </div>
+            <div class="member-border">
+               
+               <div class="member-caution clearfix">
+                  
+                      
+                       
+                       
+                       <section id="login-content">
+    <div class="login-centre">
+        
+        <div class="login-back">
+            <div class="H-over">
+
+                <form  th:action="@{/Uppsd/{uid}(uid=${uid})}" th:object="${user}" method="post" id="6" onsubmit="return check();">
+
+                    <input type="hidden" value="错误" id="yanzheng">
+
+                    <div class="login-input">
+                        <label><i class="heart">*</i>请输入旧密码：</label>
+                        <input type="password" class="list-input" id="oldpassword" name="oldpassword" placeholder="请设置6-20个字符">
+                    </div>
+                    <div class="login-input">
+                        <label><i class="heart">*</i>请设置新密码：</label>
+                        <input type="password" class="list-input" th:id="password" name="password" placeholder="请设置6-20个字符">
+                    </div>
+                    <div class="login-input">
+                        <label><i class="heart">*</i>请确认密码：</label>
+                        <input type="password" class="list-input" id="repassword" name="repassword" placeholder="请设置6-20个字符">
+                    </div>
+                   
+
+                    <div class="item-ifo">
+                        <input type="checkbox" onClick="agreeonProtocol();" id="readme" checked="checked" class="checkbox">
+                        <label for="protocol">我已阅读并同意<a id="protocol" class="blue" href="#">《悦商城用户协议》</a></label>
+                        <span class="clr"></span>
+                    </div>
+                    <div class="login-button">
+                        <button  class="login-button button" type="submit" style="width: 270px;height:45px;" >立即修改</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+                       
+                       
+                       
+                   
+               </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 商城快讯 End -->
+
+<!--- footer begin-->
+<div class="aui-footer-bot">
+    <div class="time-lists aui-footer-pd clearfix">
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="/springboot-web/theme/icon/icon-d1.png"></span>
+                <em>消费者权益</em>
+            </h4>
+            <ul>
+                <li><a href="#">保障范围 </a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="/springboot-web/theme/icon/icon-d2.png"></span>
+                <em>新手上路</em>
+            </h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="/springboot-web/theme/icon/icon-d3.png"></span>
+                <em>保障正品</em>
+            </h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="/springboot-web/theme/icon/icon-d1.png"></span>
+                <em>消费者权益</em>
+            </h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+    </div>
+    <div style="border-bottom:1px solid #dedede"></div>
+    <div class="time-lists aui-footer-pd time-lists-ls clearfix">
+        <div class="aui-footer-list clearfix">
+            <h4>购物指南</h4>
+            <ul>
+                <li><a href="#">保障范围 </a> </li>
+                <li><a href="#">购物流程</a> </li>
+                <li><a href="#">会员介绍 </a> </li>
+                <li><a href="#">生活旅行</a> </li>
+                <li><a href="#"> 常见问题 </a> </li>
+                <li><a href="#"> 联系客服购物指南 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>特色服务</h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>帮助中心</h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>新手指导</h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- footer End -->
+</body>
+</html>

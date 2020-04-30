@@ -1,0 +1,323 @@
+<!doctype html>
+<html>
+ <head>
+	<meta charset="UTF-8">
+	<meta name="Generator" content="EditPlus®">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+	<meta name="renderer" content="webkit">
+	<title>用户注册</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="theme/icon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="theme/css/base.css">
+	<link rel="stylesheet" type="text/css" href="theme/css/login.css">
+ <script type="text/javascript" src="theme/js/jquery-2.1.0.min.js"></script>
+
+    <script type="text/javascript" > 
+	
+	
+ var countdown=60; 
+function settime(obj) {
+	
+    var userName=document.getElementById("username").value;  
+    var pwd=document.getElementById("password").value;  
+    var repwd=document.getElementById("repassword").value;  
+    var email=document.getElementById("email").value;  
+    
+    var news=document.getElementById("news");
+
+   
+    
+    var matchResult=true;  
+    if(userName==""||pwd==""||repwd==""||email==""){  
+          alert("请确认是否有空缺项！");  
+          matchResult=false;  
+          return matchResult;  
+    }
+   
+    	if(userName.charAt(0)>=0&&userName.charAt(0)<=9){  
+            alert("用户名不能以数字字符开始！");  
+            matchResult=false;  
+            document.getElementById("username").value="";
+            return matchResult;  
+        }  
+      
+    
+  
+    	if(userName.length<3||userName.length>20){  
+          alert("用户名长度应在3到20个字符之间！");  
+          matchResult=false;  
+          document.getElementById("username").value="";
+          return matchResult;  
+    }
+
+
+    if(pwd.length<6||pwd.length>20||repwd.length<6||repwd.length>20){
+        alert("密码或重复密码长度应在6到20个字符之间！");
+        matchResult=false;
+        document.getElementById("password").value="";
+        return matchResult;
+    }
+
+
+    if(pwd!=repwd){
+        alert("密码和重复密码不同，请重新输入！");
+        matchResult=false;
+        document.getElementById("password").value="";
+        document.getElementById("repassword").value="";
+        return matchResult;
+    }
+
+
+
+    var mailreg = /^([a-zA-Z0-9]*[-_]?[a-zA-Z0-9]+)*@([a-zA-Z0-9]*[-_]?[a-zA-Z0-9]+)+[\\.][A-Za-z]{2,3}([\\.][A-Za-z]{2})?$/;
+    if(!email.match(mailreg)){
+        alert("邮箱格式不正确");
+        matchResult=false;
+        document.getElementById("email").value="";
+        return matchResult;
+    }
+
+
+    if(matchResult){
+      	  $.ajax( 
+                    { 
+                    	url :"http://localhost:8080/springboot-web/JudgeNickname",
+                    	 data :{"nickname":userName},  
+                        type: "POST",
+                        async:false,
+                        datatype:"json",
+                        success: function (data) 
+                        { 
+                      	  if(data=="4444"){
+                      		  alert("该用户已经注册");
+                      		  document.getElementById("username").value="";
+                      		  matchResult=false;
+
+                    
+                      	  }else{
+
+                              alert("该用户名没有注册,可以使用");
+                          }
+
+
+                        } ,
+                        error: function(data){
+                        	//alert("错误") ;
+                        }
+                    }); 
+
+    } 
+
+    //全部通过才可以发送验证码
+
+    if(matchResult){
+
+
+
+        var email=$("#email").val();
+
+        if(countdown==60){
+            alert("发送验证");
+            $.ajax(
+                {
+                    url :"http://localhost:8080/springboot-web/SendEmail",
+
+                    data :{email:email,"action":"register"},
+                    type: "POST",
+                    async: false,
+                    success: function (data)
+                    {
+                        if(data=="1111"){
+                            alert("该邮箱已经注册");
+                            document.getElementById("email").value="";
+                            matchResult=false;
+                            return matchResult;
+
+                        }else{
+
+                            var message=data;
+                            news.value=message;
+                            alert(message) ;
+
+
+
+                        }
+                    } ,
+                    error: function(data){
+                        alert("错误") ;
+                    }
+                });
+        }
+
+
+
+    }
+
+
+
+      
+      
+    	  
+    	/*   if (countdown == 0) { 
+    			
+    	        obj.removeAttribute("disabled");    
+    	        obj.value="获取短信验证码"; 
+    	        countdown = 60; 
+    	        return;
+    	    } else { 
+    			
+    	        obj.setAttribute("disabled", true); 
+    	        obj.value="重新发送(" + countdown + ")"; 
+    	        countdown--; 
+    	    } 
+    	    
+    	setTimeout(function() { 
+    		
+    	    settime(obj) }
+    	    ,1000) 
+    	
+    	   */
+    	 
+      }
+    
+
+    
+    
+	
+	
+ 
+  
+</script>
+
+
+<script type="text/javascript">  
+     function login(){  
+    	
+       var news=document.getElementById("news").value;
+
+      var message=document.getElementById("message").value; 
+    
+      
+      
+      var matchResult=true;  
+      if(news!=message){  
+            alert("请确认验证码输入正确！");  
+           
+            document.getElementById("message").value="";
+            matchResult=false;  
+      }else{
+    	
+      }
+      
+      if(document.getElementById("readme").checked){
+    	   
+    	}else{
+    		 alert("请同意相关协议！"); 
+    		 matchResult=false; 
+    	}
+  
+      return matchResult;  
+     }  
+   </script> 
+
+
+
+
+    
+ </head>
+ <body>
+
+<!--- header begin-->
+<header id="pc-header">
+    <div class="login-header" style="padding-bottom:0">
+        <div><h1><a href="index.html"><img src="theme/icon/logo.png"></a></h1></div>
+    </div>
+</header>
+<!-- header End -->
+
+
+
+<section id="login-content">
+    <div class="login-centre">
+        <div class="login-switch clearfix">
+            <p class="fr">我已经注册，现在就 <a href="login.html">登录</a></p>
+        </div>
+        <div class="login-back">
+            <div class="H-over">
+                <form action="/springboot-web/Register" modelAttribute="user"  method="post" onsubmit="return login()">
+                    <div class="login-input">
+                        <label><i class="heart">*</i>用户名：</label>
+                        <input type="text" class="list-input1" id="username" name="username" placeholder="请设置长度为3-20个字符" >
+                        <input type="hidden" id="news">
+                    </div>
+                    <div class="login-input">
+                        <label><i class="heart">*</i>请设置密码：</label>
+                        <input type="password" class="list-input" id="password" name="password" placeholder="请设置6-20个字符">
+                    </div>
+                    <div class="login-input">
+                        <label><i class="heart">*</i>请确认密码：</label>
+                        <input type="password" class="list-input" id="repassword" name="repassword" placeholder="请设置6-20个字符">
+                    </div>
+                    <div class="login-input">
+                        <label><i class="heart">*</i>邮箱：</label>
+                        <input type="text" class="list-iphone" id="email" name="email" placeholder="请输入正确的邮箱地址">
+                      <!---  <a href="#"   onclick="settime(this)" class="obtain">获取短信验证码</a>  --->
+                        <input type="button" class="obtain" id="btn" value="获取短信验证码" onclick="settime(this)" /> 
+                    </div>
+                    <div class="login-input">
+                        <label><i class="heart">*</i>短信验证码：</label>
+                        <input type="text" class="list-notes" id="message" name="info[password]" placeholder="请输入验证码">
+                    </div>
+                    <div class="item-ifo">
+                        <input type="checkbox" onClick="agreeonProtocol();" id="readme" checked="checked" class="checkbox">
+                        <label for="protocol">我已阅读并同意<a id="protocol" class="blue" href="#">《悦商城用户协议》</a></label>
+                        <span class="clr"></span>
+                    </div>
+                    <div class="login-button">
+                      <button  class="login-button button" type="submit" style="width: 270px;height:45px;" >立即注册</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--- footer begin-->
+<footer id="footer">
+    <div class="containers">
+        <div class="w" style="padding-top:30px">
+            <div id="footer-2013">
+                <div class="links">
+                    <a href="">关于我们</a>
+                    |
+                    <a href="">联系我们</a>
+                    |
+                    <a href="">人才招聘</a>
+                    |
+                    <a href="">商家入驻</a>
+                    |
+                    <a href="">广告服务</a>
+                    |
+                    <a href="">手机京东</a>
+                    |
+                    <a href="">友情链接</a>
+                    |
+                    <a href="">销售联盟</a>
+                    |
+                    <a href="">English site</a>
+                </div>
+                <div style="padding-left:10px">
+                    <p style="padding-top:10px; padding-bottom:10px; color:#999">网络文化经营许可证：浙网文[2013]0268-027号| 增值电信业务经营许可证：浙B2-20080224-1</p>
+                    <p style="padding-bottom:10px; color:#999">信息网络传播视听节目许可证：1109364号 | 互联网违法和不良信息举报电话:0571-81683755</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</footer>
+<!-- footer End -->
+</body>
+</html>

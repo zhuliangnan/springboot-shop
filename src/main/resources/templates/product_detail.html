@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8"/>
+<title>后台管理系统</title>
+<meta name="author" content="DeathGhost" />
+<link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/style.css" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/css/style.css">
+<!--[if lt IE 9]>
+<script src="/springboot-web/theme/js/html5.js" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/js/html5.js"></script>
+<![endif]-->
+<!--<script src="js/jquery.js" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/js/jquery.js"></script>-->
+ <style>
+  #editor {
+   width: 1024px;
+   height: 500px;
+   margin-left: 120px;
+   margin-top: 0;
+  }
+ </style>
+<script src="http://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
+<script src="/springboot-web/theme/js/jquery.mCustomScrollbar.concat.min.js" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script>
+
+	(function($){
+		$(window).load(function(){
+			
+			$("a[rel='load-content']").click(function(e){
+				e.preventDefault();
+				var url=$(this).attr("href");
+				$.get(url,function(data){
+					$(".content .mCSB_container").append(data); //load new content inside .mCSB_container
+					//scroll-to appended content 
+					$(".content").mCustomScrollbar("scrollTo","h2:last");
+				});
+			});
+			
+			$(".content").delegate("a[href='top']","click",function(e){
+				e.preventDefault();
+				$(".content").mCustomScrollbar("scrollTo",$(this).attr("href"));
+			});
+			
+		});
+	})(jQuery);
+</script>
+<script type="text/javascript" > 
+ 
+    function product_update(){
+        
+        var price=document.getElementById("price").value;
+
+       var goodsname=document.getElementById("goodsname").value;
+       var stock=document.getElementById("stock").value;
+      var goodstate = $('#goodstate option:selected').text();//选中的文本
+      var  secondclassify = $('#secondclassify option:selected').text();//选中的文本
+       var content = UE.getEditor('editor').getContentTxt();
+
+       var color = $('#color option:selected').text();//颜色
+       var model = $('#model option:selected').text();//款式
+       var gid = [[${goods.gid}]];//gid
+       var formData = new FormData();
+       if($('#file')[0].files[0] == null){
+           alert("请先选择文件路径");
+       }
+       formData.append('file', $('#file')[0].files[0]);
+       formData.append('goodsname', goodsname);
+       formData.append('stock', stock);
+       formData.append('goodstate', goodstate);
+       formData.append('secondclassify', secondclassify);
+       formData.append('content', content);
+       formData.append('price', price);
+       formData.append('color', color);
+       formData.append('model', model);
+
+       formData.append('gid', gid);
+       
+       
+
+      var matchResult=true;
+  
+
+           $.ajax({
+               url: "http://localhost:8080/springboot-web/AdminGoodUpdate",
+               data: formData,
+               async:false,
+               cache:false,
+               processData:false,
+               contentType:false,
+               type: "post",
+               dataType: "json",
+               success: function(data) {
+                   if(data.status == "success"){
+                    alert("成功") ;
+                       window.location.href="http://localhost:8080/springboot-web/AdminGoodAll";
+  
+                   }else if(data.status == "fail"){
+                       alert("失败") ;
+                       return matchResult;
+                   }
+  
+               },
+               error: function(data){
+                   
+               },
+  
+  
+           });
+  
+        return matchResult;
+   }
+    </script>
+
+
+
+
+</head>
+<body>
+<!--header-->
+<header>
+ <h1><img src="/springboot-web/theme/images/admin_logo.png" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/images/admin_logo.png"/></h1>
+ <ul class="rt_nav">
+  <li><a href="javascript:if(confirm('http://www.deathghost.cn/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.deathghost.cn/'" tppabs="http://www.deathghost.cn/" target="_blank" class="website_icon">站点首页</a></li>
+  <li><a href="#" class="clear_icon">清除缓存</a></li>
+  <li><a href="#" class="admin_icon">DeathGhost</a></li>
+  <li><a href="#" class="set_icon">账号设置</a></li>
+  <li><a href="login.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/login.html" class="quit_icon">安全退出</a></li>
+ </ul>
+</header>
+<!--aside nav-->
+<!--aside nav-->
+<aside class="lt_aside_nav content mCustomScrollbar">
+ <h2><a href="/springboot-web/AdminGoodAll" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/index.html">起始页</a></h2>
+ <ul>
+  <li>
+   <dl>
+    <dt>常用布局示例</dt>
+    <!--当前链接则添加class:active-->
+    <dd><a href="/springboot-web/AdminGoodAll" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/product_list.html" class="active">商品列表示例</a></dd>
+    <dd><a href="/springboot-web/AdminGoodAll" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/product_detail.html">商品详情示例</a></dd>
+    <dd><a href="recycle_bin.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/recycle_bin.html">商品回收站示例</a></dd>
+   </dl>
+  </li>
+  <li>
+   <dl>
+    <dt>订单信息</dt>
+    <dd><a href="/springboot-web/AdminOrderAll" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/order_list.html">订单列表示例</a></dd>
+    <dd><a href="order_detail.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/order_detail.html">订单详情示例</a></dd>
+   </dl>
+  </li>
+  <li>
+   <dl>
+    <dt>会员管理</dt>
+    <dd><a href="/springboot-web/AdminUserMessageAll" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/user_list.html">会员列表示例</a></dd>
+    <dd><a href="user_detail.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/user_detail.html">添加会员（详情）示例</a></dd>
+    <dd><a href="user_rank.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/user_rank.html">会员等级示例</a></dd>
+    <dd><a href="adjust_funding.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/adjust_funding.html">会员资金管理示例</a></dd>
+   </dl>
+  </li>
+  <li>
+   <dl>
+    <dt>基础设置</dt>
+    <dd><a href="setting.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/setting.html">站点基础设置示例</a></dd>
+   </dl>
+  </li>
+  <li>
+   <dl>
+    <dt>配送与支付设置</dt>
+    <dd><a href="express_list.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/express_list.html">配送方式</a></dd>
+    <dd><a href="pay_list.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/pay_list.html">支付方式</a></dd>
+   </dl>
+  </li>
+  <li>
+   <dl>
+    <dt>在线统计</dt>
+    <dd><a href="/springboot-web/AdminSumFlow" >流量统计</a></dd>
+    <dd><a href="/springboot-web/AdminSumSales" >总销售额统计</a></dd>
+    <dd><a href="/springboot-web/AdminSumBrand" >品牌销售额统计</a></dd>
+   </dl>
+  </li>
+  <li>
+   <p class="btm_infor">© DeathGhost.cn 版权所有</p>
+  </li>
+ </ul>
+</aside>
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">商品更新</h2>
+       <a class="fr top_rt_btn"  href="/springboot-web/AdminGoodAll" >返回产品列表</a>
+      </div>
+     <section>
+      <ul class="ulColumn2">
+       <li>
+        <span class="item_name" style="width:120px;">商品名称：</span>
+        <input type="text" class="textbox textbox_295"  id="goodsname"   th:value="${goods.goodsname}" />
+        
+       </li>
+
+
+       <div id="detail_refresh" th:fragment="detail_refresh" >
+
+       <li>
+        <span class="item_name" style="width:120px;">库存：</span>
+        <input type="text" class="textbox" id="stock"  th:value="${detail.stock}"/>
+        
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">单价：</span>
+        <input type="text" class="textbox" id="price"  th:value="${detail.price}"/>
+       </li>
+
+       </div>
+
+
+
+       <li>
+        <span class="item_name" style="width:120px;">商品状态：</span>
+        <select class="select" id="goodstate">
+         <option>上架</option>
+         <option>未上架</option>
+        </select>
+       </li>
+       <!---
+        
+          $('#testSelect option:selected').text();//选中的文本
+
+       $('#testSelect option:selected') .val();//选中的值
+       ---->
+     
+
+       <li>
+        <span class="item_name" style="width:120px;">品牌：</span>
+        <select class="select" id="secondclassify">
+         <option>华为</option>
+         <option>小米</option>
+         <option>魅族</option>
+        </select>
+        
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">分类：</span>
+        <select class="select">
+         <option>手机</option>
+         <option>电脑</option>
+         <option>耳机</option>
+        </select>
+        
+       </li>
+
+       <li>
+        <span class="item_name" style="width:120px;">颜色：</span>
+        <select class="select" id="color">
+         <option>黑色</option>
+         <option>白色</option>
+         <option>金色</option>
+        </select>
+        
+       </li>
+
+       <li>
+        <span class="item_name" style="width:120px;">规格：</span>
+        <select class="select" id="model">
+         <option>全网通32G</option>
+         <option>全网通64G</option>
+         <option>全网通128G</option>
+        </select>
+        
+       </li>
+      
+       <li>
+        <span class="item_name" style="width:120px;">上传图片：</span>
+        <label class="uploadImg">
+         <input type="file" id="file" name="file"/>
+         <span>上传图片</span>
+        </label>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">产品详情：</span>
+        <script id="editor" type="text/plain">
+
+        </script>
+
+       </li>
+       <li>
+
+
+        <input type="button" value="提交" onclick="return product_update();" class="link_btn"/>
+
+       </li>
+      </ul>
+     </section>
+ </div>
+</section>
+<script src="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/js/ueditor.config.js" ></script>
+<script src="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/js/ueditor.all.min.js" > </script>
+<script type="text/javascript">
+
+    //实例化编辑器
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue = UE.getEditor('editor');
+
+    function isFocus(e){
+        alert(UE.getEditor('editor').isFocus());
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function setblur(e){
+        UE.getEditor('editor').blur();
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function insertHtml() {
+        var value = prompt('插入html代码', '');
+        UE.getEditor('editor').execCommand('insertHtml', value)
+    }
+    function createEditor() {
+        enableBtn();
+        UE.getEditor('editor');
+    }
+    function getAllHtml() {
+        alert(UE.getEditor('editor').getAllHtml())
+    }
+    function getContent() {
+        var arr = [];
+        arr.push("使用editor.getContent()方法可以获得编辑器的内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getContent());
+        alert(arr.join("\n"));
+    }
+    function getPlainTxt() {
+        var arr = [];
+        arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getPlainTxt());
+        alert(arr.join('\n'))
+    }
+    function setContent(isAppendTo) {
+        var arr = [];
+        arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
+        UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
+        alert(arr.join("\n"));
+    }
+    function setDisabled() {
+        UE.getEditor('editor').setDisabled('fullscreen');
+        disableBtn("enable");
+    }
+
+    function setEnabled() {
+        UE.getEditor('editor').setEnabled();
+        enableBtn();
+    }
+
+    function getText() {
+        //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
+        var range = UE.getEditor('editor').selection.getRange();
+        range.select();
+        var txt = UE.getEditor('editor').selection.getText();
+        alert(txt)
+    }
+
+    function getContentTxt() {
+        var arr = [];
+        arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
+        arr.push("编辑器的纯文本内容为：");
+        arr.push(UE.getEditor('editor').getContentTxt());
+        alert(arr.join("\n"));
+    }
+    function hasContent() {
+        var arr = [];
+        arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
+        arr.push("判断结果为：");
+        arr.push(UE.getEditor('editor').hasContents());
+        alert(arr.join("\n"));
+    }
+    function setFocus() {
+        UE.getEditor('editor').focus();
+    }
+    function deleteEditor() {
+        disableBtn();
+        UE.getEditor('editor').destroy();
+    }
+    function disableBtn(str) {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            if (btn.id == str) {
+                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+            } else {
+                btn.setAttribute("disabled", "true");
+            }
+        }
+    }
+    function enableBtn() {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+        }
+    }
+
+    function getLocalData () {
+        alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
+    }
+
+    function clearLocalData () {
+        UE.getEditor('editor').execCommand( "clearlocaldata" );
+        alert("已清空草稿箱")
+    }
+</script>
+<script type="text/javascript">
+
+ $('#color').on("change",function () {
+
+  /*alert("进入color");*/
+  var color = $('#color option:selected').text();//颜色
+  var model = $('#model option:selected').text();//款式
+  // 装载局部刷新返回的页面
+  var gid = [[${goods.gid}]];
+  $("#detail_refresh").load("/springboot-web/ThymeleafRefresh",{'model':model,'color':color,"gid":gid});
+
+ })
+
+ $('#model').on("change",function () {
+
+/*  alert("进入model");*/
+  var color = $('#color option:selected').text();//颜色
+  var model = $('#model option:selected').text();//款式
+  // 装载局部刷新返回的页面
+  var gid = [[${goods.gid}]];
+  $("#detail_refresh").load("/springboot-web/ThymeleafRefresh",{'model':model,'color':color,"gid":gid});
+ })
+
+</script>
+</body>
+</html>

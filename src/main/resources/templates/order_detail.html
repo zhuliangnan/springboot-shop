@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8"/>
+<title>后台管理系统</title>
+<meta name="author" content="DeathGhost" />
+<link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/style.css" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/css/style.css">
+<!--[if lt IE 9]>
+<script src="/springboot-web/theme/js/html5.js" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/js/html5.js"></script>
+<![endif]-->
+<!--<script src="/springboot-web/theme/http://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>-->
+ <script src="http://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
+
+ <script src="/springboot-web/theme/js/jquery.mCustomScrollbar.concat.min.js" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script>
+
+	(function($){
+		$(window).load(function(){
+			
+			$("a[rel='load-content']").click(function(e){
+				e.preventDefault();
+				var url=$(this).attr("href");
+				$.get(url,function(data){
+					$(".content .mCSB_container").append(data); //load new content inside .mCSB_container
+					//scroll-to appended content 
+					$(".content").mCustomScrollbar("scrollTo","h2:last");
+				});
+			});
+			
+			$(".content").delegate("a[href='top']","click",function(e){
+				e.preventDefault();
+				$(".content").mCustomScrollbar("scrollTo",$(this).attr("href"));
+			});
+			
+		});
+	})(jQuery);
+</script>
+
+
+</head>
+<body>
+<!--header-->
+<header>
+ <h1><img src="/springboot-web/theme/images/admin_logo.png" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/images/admin_logo.png"/></h1>
+ <ul class="rt_nav">
+  <li><a href="javascript:if(confirm('http://www.deathghost.cn/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.deathghost.cn/'" tppabs="http://www.deathghost.cn/" target="_blank" class="website_icon">站点首页</a></li>
+  <li><a href="#" class="clear_icon">清除缓存</a></li>
+  <li><a href="#" class="admin_icon">DeathGhost</a></li>
+  <li><a href="#" class="set_icon">账号设置</a></li>
+  <li><a href="login.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/login.html" class="quit_icon">安全退出</a></li>
+ </ul>
+</header>
+<!--aside nav-->
+<!--aside nav-->
+<aside class="lt_aside_nav content mCustomScrollbar">
+ <h2><a href="/springboot-web/AdminGoodAll" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/index.html">起始页</a></h2>
+ <ul>
+  <li>
+   <dl>
+    <dt>常用布局示例</dt>
+    <!--当前链接则添加class:active-->
+    <dd><a href="/springboot-web/AdminGoodAll" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/product_list.html" class="active">商品列表示例</a></dd>
+    <dd><a href="/springboot-web/AdminGoodAll" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/product_detail.html">商品详情示例</a></dd>
+    <dd><a href="recycle_bin.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/recycle_bin.html">商品回收站示例</a></dd>
+   </dl>
+  </li>
+  <li>
+   <dl>
+    <dt>订单信息</dt>
+    <dd><a href="/springboot-web/AdminOrderAll" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/order_list.html">订单列表示例</a></dd>
+    <dd><a href="order_detail.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/order_detail.html">订单详情示例</a></dd>
+   </dl>
+  </li>
+  <li>
+   <dl>
+    <dt>会员管理</dt>
+    <dd><a href="/springboot-web/AdminUserMessageAll" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/user_list.html">会员列表示例</a></dd>
+    <dd><a href="user_detail.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/user_detail.html">添加会员（详情）示例</a></dd>
+    <dd><a href="user_rank.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/user_rank.html">会员等级示例</a></dd>
+    <dd><a href="adjust_funding.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/adjust_funding.html">会员资金管理示例</a></dd>
+   </dl>
+  </li>
+  <li>
+   <dl>
+    <dt>基础设置</dt>
+    <dd><a href="setting.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/setting.html">站点基础设置示例</a></dd>
+   </dl>
+  </li>
+  <li>
+   <dl>
+    <dt>配送与支付设置</dt>
+    <dd><a href="express_list.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/express_list.html">配送方式</a></dd>
+    <dd><a href="pay_list.html" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/pay_list.html">支付方式</a></dd>
+   </dl>
+  </li>
+  <li>
+   <dl>
+    <dt>在线统计</dt>
+    <dd><a href="/springboot-web/AdminSumFlow" >流量统计</a></dd>
+    <dd><a href="/springboot-web/AdminSumSales" >总销售额统计</a></dd>
+    <dd><a href="/springboot-web/AdminSumBrand" >品牌销售额统计</a></dd>
+   </dl>
+  </li>
+  <li>
+   <p class="btm_infor">© DeathGhost.cn 版权所有</p>
+  </li>
+ </ul>
+</aside>
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">订单详情示例</h2>
+      </div>
+      <table class="table">
+       <tr>
+        <td >收件人：<em th:text="${orders.addname}">DeathGhost</em></td>
+        <td >联系电话：<em th:text="${orders.phone}">18300000000</em></td>
+        <td>收件地址：<em th:text="${orders.addname}">陕西省西安市雁塔区丈八路2000集都市印象18栋2160室</em></td>
+        <td th:text="${orders.upTime}">付款时间：2016-02-01 13:56</td>
+       </tr>
+       <tr>
+        <td >下单时间：<em th:text="${orders.upTime}">2016-02-01 13:56</em></td>
+        <td >发货时间：<em th:text="${orders.sendTime1}">2016-02-01 13:56</em></td>
+        <td >签收时间：<em th:text="${orders.sendTime2}">2016-02-01 13:56</em></td>
+        <td >评价时间时间：<em th:text="${orders.sendTime2}">---</em></td>
+       </tr>
+       <tr>
+        <td>订单状态：
+
+         <span th:if="${orders.state == 0 }">
+              <a style="color: #a72a10">未付款</a>
+          </span>
+         <span th:if="${orders.state == 1 }">
+              <a style="color: #a72a10">已付款未发货</a>
+          </span>
+         <span th:if="${orders.state == 2 }">
+              <a style="color: #a72a10">已发货</a>
+          </span>
+         <span th:if="${orders.state == 3 }">
+              <a style="color: #a72a10">已付款已签收</a>
+          </span>
+         <span th:if="${orders.state == 4001 }">
+              <a style="color: #a72a10">换货中</a>
+          </span>
+         <span th:if="${orders.state == 4002 }">
+              <a style="color: #a72a10">退货退款中</a>
+          </span>
+         <span th:if="${orders.state == 4003 }">
+              <a style="color: #a72a10">订单已经完成</a>
+          </span>
+        </td>
+
+        <td colspan="3">订单备注：<mark th:text="${usermessage.details}">帮我检查好呀~谢谢~</mark></td>
+
+        </tr>
+      </table>
+      <table class="table">
+       <tr>
+        <td class="center"  style="width: 50px;"><img th:src="@{/theme/img/phone/{picture}.jpg(picture=${orders.picture})}" tppabs="http://www.17sucai.com/preview/183822/2016-02-18/adminTemplate/upload/goods01.jpg" width="50" height="50"/></td>
+        <td style="width:  87px;" th:text="${orders.goodsname}">这里是产品名称</td>
+        
+        <td class="center" style="width: 120px;"><strong style="color: #0c9c6e" >单价:</strong><strong style="color: #0c9c6e"  th:text="${orders.price}">59.00</strong></td>
+        <td class="center" style="width: 130px;">
+         <p >颜色：<em th:text="${orders.color}">蓝色</em></p>
+         <p >规格：<em th:text="${orders.model}">32G</em></p>
+        </td>
+        <td class="center" style="width: 20px;"><strong th:text="${orders.number}">1</strong></td>
+        <td class="center" style="width: 145px;" ><strong style="color: #0c9c6e" >合计:</strong><strong style="color: #0c9c6e"  th:text="${orders.price*orders.number}">59.00</strong></td>
+        <td class="center"  style="width: 170px;">新收货地址</td>
+        <td class="center"><input type="text" class="textbox textbox_295" placeholder="修改收货地址" id="address"/></td>
+       </tr>
+       
+      </table>
+      <aside class="mtb" style="text-align:right;">
+       <label>管理员操作：</label>
+       <input type="text" class="textbox textbox_295" placeholder="管理员操作备注(必填)" id="details"/>
+       <input type="button" value="提醒付款" class="group_btn" id="noticPay" onclick="action1();" />
+       <input type="button" value="发货" class="group_btn" id="Deliver" onclick=" action2();"/>
+       <input type="button" value="确认换货" class="group_btn" id="checkback" onclick=" action3();"/>
+       <input type="button" value="确认退货退款" class="group_btn" id="checkrollback" onclick=" action4();"/>
+       <input type="button" value="提醒评价" class="group_btn" id="noticcomment" onclick=" action5();"/>
+     
+      </aside>
+ </div>
+</section>
+</body>
+<script type="text/javascript" >
+
+ function action1(){
+
+  var state=[[${orders.state}]];//state
+
+  var address=document.getElementById("address").value;
+
+  var details=document.getElementById("details").value;
+
+  if (address == null ||  address == "") {
+   address = "默认地址";
+  }
+
+  var oid = [[${orders.oid}]];//oid
+
+  $("#noticPay").click(function () {
+   if(state == 0){
+    //对于 oid 这个订单 进行 改变状态 state  还有管理员的消息
+
+    alert("操作成功");
+    window.location.href="http://localhost:8080/springboot-web/AdminOperation/"+oid+"/0/"+details+"/"+address;
+   }else{
+
+    alert("该订单不允许这个操作");
+   }
+  });
+
+ }
+</script>
+<script type="text/javascript" >
+function action2(){
+
+var state=[[${orders.state}]];//state
+
+var address=document.getElementById("address").value;
+
+var details=document.getElementById("details").value;
+
+if (address == null ||  address == "") {
+address = "默认地址";
+}
+
+var oid = [[${orders.oid}]];//oid
+
+
+$("#Deliver").click(function () {
+if(state==1){
+alert("操作成功");
+window.location.href="http://localhost:8080/springboot-web/AdminOperation/"+oid+"/2/"+details+"/"+address;
+
+}else{
+alert("该订单不允许这个操作");
+}
+});
+
+
+}
+</script>
+<script type="text/javascript" >
+ function action3(){
+
+
+  var state=[[${orders.state}]];//state
+
+  var address=document.getElementById("address").value;
+
+  var details=document.getElementById("details").value;
+
+  if (address == null ||  address == "") {
+   address = "默认地址";
+  }
+
+  var oid = [[${orders.oid}]];//oid
+
+  $("#checkback").click(function () {
+   if(state==4001){
+    alert("操作成功");
+    window.location.href="http://localhost:8080/springboot-web/AdminOperation/"+oid+"/4003/"+details+"/"+address;
+
+   }else{
+    alert("该订单不允许这个操作");
+   }
+  });
+
+ }
+</script>
+
+<script type="text/javascript" >
+ function action4(){
+
+  var state=[[${orders.state}]];//state
+
+  var address=document.getElementById("address").value;
+
+  var details=document.getElementById("details").value;
+
+  if (address == null ||  address == "") {
+   address = "默认地址";
+  }
+
+  var oid = [[${orders.oid}]];//oid
+
+
+  $("#checkrollback").click(function () {
+   if(state==4002){
+    alert("操作成功");
+    window.location.href="http://localhost:8080/springboot-web/AdminOperation/"+oid+"/4003/"+details+"/"+address;
+
+   }else{
+    alert("该订单不允许这个操作");
+   };
+  });
+
+
+ }
+</script>
+
+
+<script type="text/javascript" >
+ function action5(){
+
+  var state=[[${orders.state}]];//state
+
+  var address=document.getElementById("address").value;
+
+  var details=document.getElementById("details").value;
+
+  if (address == null ||  address == "") {
+   address = "默认地址";
+  }
+
+  var oid = [[${orders.oid}]];//oid
+
+  $("#noticcomment").click(function () {
+   if(state==3){
+    alert("操作成功");
+    window.location.href="http://localhost:8080/springboot-web/AdminOperation/"+oid+"/3/"+details+"/"+address;
+
+   }else{
+    alert("该订单不允许这个操作");
+   }
+  });
+
+ }
+</script>
+</html>

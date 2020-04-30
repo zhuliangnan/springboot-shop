@@ -1,0 +1,286 @@
+<!doctype html >
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+ <head>
+	<meta charset="UTF-8">
+	<meta name="Generator" content="EditPlus®">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+	<meta name="renderer" content="webkit">
+	<title>订单提交成功</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/springboot-web/theme/icon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/base.css">
+     <link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/base1">
+	<link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/home.css">
+	<script type="text/javascript" src="/springboot-web/theme/js/jquery.js"></script>
+	<script type="text/javascript" src="/springboot-web/theme/js/js-tab.js"></script>
+    <script>
+         $(function(){
+
+             $("#H-table li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over").hide();
+                         $(".H-over:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+             $("#H-table1 li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over1").hide();
+                         $(".H-over1:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+         });
+     </script>
+    <script type="text/javascript">
+         (function(a){
+             a.fn.hoverClass=function(b){
+                 var a=this;
+                 a.each(function(c){
+                     a.eq(c).hover(function(){
+                         $(this).addClass(b)
+                     },function(){
+                         $(this).removeClass(b)
+                     })
+                 });
+                 return a
+             };
+         })(jQuery);
+
+         $(function(){
+             $("#pc-nav").hoverClass("current");
+         });
+     </script>
+
+ </head>
+ <body>
+
+<!--- header begin-->
+<header id="pc-header">
+    <div class="BHeader">
+        <div class="yNavIndex">
+            <ul class="BHeaderl">
+                <li>
+                    <div th:if="${session.existUser}==null">
+                        <a href="/springboot-web/Login" style="color:#ea7bde;">请登录</a>
+                    </div>
+
+                </li>
+
+                <li>
+                    <div th:if="${session.existUser}!=null">
+                        <em style="color:#ea3ca5;" th:text="${session.existUser.nickname}" >您好:默认用户 </em>
+                    </div>
+
+                </li>
+
+                <li>
+                    <div th:if="${session.existUser}!=null">
+                        <a href="/springboot-web/RemoveLogin"><em style="color:#ea3345;">退出</em></a>
+                    </div>
+                </li>
+                <li class="headerul">|</li>
+                <li><a href="#" class="M-iphone">手机悦商城</a> </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container clearfix">
+        <div class="header-logo fl" style="width:212px;"><h1><a href="#"><img src="/springboot-web/theme/icon/logo.png"></a></h1></div>
+        <div class="pc-order-titlei fl"><h2>填写订单</h2></div>
+        <div class="pc-step-title fl">
+            <ul>
+                <li class="cur2"><a href="#">1 . 我的购物车</a></li>
+                <li class="cur2"><a href="#">2 . 填写核对订单</a></li>
+                <li class="cur"><a href="#">3 . 成功提交订单</a></li>
+            </ul>
+        </div>
+    </div>
+
+</header>
+<!-- header End -->
+
+
+<!-- 订单提交成功 begin-->
+<section>
+    <div class="containers">
+        <div class="pc-order-title"><h3>您的订单已提交成功!</h3></div>
+        <div class="pc-border">
+            <div class="pc-order-text">
+                <p>订单提交成功，请您尽快付款！   订单号 ：<em>127002</em><em th:text="${ordersid}">594949494</em></p>
+                <p class="reds">请您在提交订单后24小时内完成付款，否则订单自动取消。</em></p>
+            </div>
+            <div class="pc-line"></div>
+            <div class="pc-order-text">
+
+             <p th:each="order:${OrderList}">
+                 商品名称：<span th:text="${order.goodsname}">商品名称</span> <span th:text="${order.model}">商品类型</span><span th:text="${order.color}">商品颜色</span>电信4G手机 双卡双待经典S3升级版，全新便捷双卡双待（GSM可上网)
+             </p>
+
+                <p>收货地址：<span th:text="${address}">地址</span> 收货人：<span th:text="${name}">姓名</span> <span th:text="${phone}">电话</span></p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 订单提交成功 End-->
+
+<div class="pc-buying clearfix_car" style="margin-top:30px">
+    <div class="time-list time-list-w fl ">
+        <div class="time-title">
+            <ul class="brand-tab H-table H-table-shop  fl" id="H-table">
+                <li class="cur"><a href="javascript:void(0);" class="cur">商家支付(支付宝,微信)</a></li>
+                <li><a href="javascript:void(0);">个人支付宝</a></li>
+
+            </ul>
+            <span class="pc-order-price">总价：￥<span th:text="${sumprice}">总价</span></span>
+      </div>
+        <div class="time-border time-border-h "  >
+            <div class="time-border-list pc-shop-clear pc-order-clear H-over ">
+                <ul class="pc-order-list clearfix">
+
+                    <li><a th:href="@{/Alipay/{WIDout_trade_no}/{WIDtotal_amount}/{WIDsubject}/{WIDbody}(WIDout_trade_no=${ordersid},WIDtotal_amount=${sumprice},WIDsubject=手机,WIDbody=全网通手机)}"><img src="/springboot-web/theme/bank/Alipay.jpg"  width="205" height="40"></a> </li>
+                   <li><a href="#"><img src="/springboot-web/theme/bank/Weixinpay.jpg"  width="205" height="40"></a> </li>
+                    <!--微信端的支付接口,需要企业认证和营业执照所以不可以申请到-->
+
+                    <!--    <li><a href="#"><img src="/springboot-web/theme/bank/3.gif"  width="216" height="40"></a> </li>
+                   <li><a href="#"><img src="/springboot-web/theme/bank/4.gif"  width="216" height="40"></a> </li>
+                      <li><a href="#"><img src="/springboot-web/theme/bank/5.gif"  width="216" height="40"></a> </li>
+                   <li><a href="#"><img src="/springboot-web/theme/bank/6.gif"  width="216" height="40"></a> </li>
+                       <li><a href="#"><img src="/springboot-web/theme/bank/7.gif"  width="216" height="40"></a> </li>
+                   <li><a href="#"><img src="/springboot-web/theme/bank/8.gif"  width="216" height="40"></a> </li>
+                     <li><a href="#"><img src="/springboot-web/theme/bank/9.gif"  width="216" height="40"></a> </li>
+                  <li><a href="#"><img src="/springboot-web/theme/bank/10.gif"  width="216" height="40"></a> </li>
+                   <li><a href="#"><img src="/springboot-web/theme/bank/11.gif"  width="216" height="40"></a> </li>
+                       <li><a href="#"><img src="/springboot-web/theme/bank/12.gif"  width="216" height="40"></a> </li>
+                   <li><a href="#"><img src="/springboot-web/theme/bank/13.gif"  width="216" height="40"></a> </li>
+                      <li><a href="#"><img src="/springboot-web/theme/bank/14.gif"  width="216" height="40"></a> </li>
+                   <li><a href="#"><img src="theme/bank/15.gif"  width="216" height="40"></a> </li>
+             <li><a href="#"><img src="/springboot-web/theme/bank/16.gif"  width="216" height="40"></a> </li>
+                   <li><a href="#"><img src="/springboot-web/theme/bank/17.gif"  width="216" height="40"></a> </li>-->
+
+              </ul>
+            </div>
+            <div style="display:none;" class="time-border-list  pc-shop-clear pc-order-clear H-over ">
+                     <a href="#"><img src="/springboot-web/theme/bank/zhuliangnan.png" style="width: 200px; height: 200px; margin-left: 57px;"></a>
+            </div>
+
+            <a href="/springboot-web/UpdateMyorderState"><div class="pc-order-go">支付</div></a>
+        </div>
+    </div>
+</div>
+
+<!--- footer begin-->
+<div class="aui-footer-bot">
+    <div class="time-lists aui-footer-pd clearfix">
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="/springboot-web/theme/icon/icon-d1.png"></span>
+                <em>消费者权益</em>
+            </h4>
+            <ul>
+                <li><a href="#">保障范围 </a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="/springboot-web/theme/icon/icon-d2.png"></span>
+                <em>新手上路</em>
+            </h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="/springboot-web/theme/icon/icon-d3.png"></span>
+                <em>保障正品</em>
+            </h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="/springboot-web/theme/icon/icon-d1.png"></span>
+                <em>消费者权益</em>
+            </h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+    </div>
+    <div style="border-bottom:1px solid #dedede"></div>
+    <div class="time-lists aui-footer-pd time-lists-ls clearfix">
+        <div class="aui-footer-list clearfix">
+            <h4>购物指南</h4>
+            <ul>
+                <li><a href="#">保障范围 </a> </li>
+                <li><a href="#">购物流程</a> </li>
+                <li><a href="#">会员介绍 </a> </li>
+                <li><a href="#">生活旅行</a> </li>
+                <li><a href="#"> 常见问题 </a> </li>
+                <li><a href="#"> 联系客服购物指南 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>特色服务</h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>帮助中心</h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>新手指导</h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- footer End -->
+</body>
+</html>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.springbootshop.mapper.AddressMapper">
+  <resultMap id="BaseResultMap" type="com.springboot.springbootshop.model.Address">
+    <id column="adid" jdbcType="INTEGER" property="adid" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    adid, uid, address, phone, name, state
+  </sql>
+
+
+
+
+
+
+  <!-- 根据uid查询用户地址 使用SQL -->
+  <select id="ShowAllAddressByState" resultType="com.springboot.springbootshop.model.Address" >
+		select *
+		from address
+		where uid = #{uid} and state=#{state}
+	</select>
+
+
+
+  <insert id="addAddress">
+	insert into address(uid,address,phone,name,state) values (#{uid},#{address},#{phone},#{name},#{state})
+	</insert>
+
+
+
+  <update id="updateAddress" parameterType="java.lang.Integer">
+		update address set state='非默认'  where uid=#{uid}
+	</update>
+
+
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from address
+    where adid = #{adid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from address
+    where adid = #{adid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springboot.springbootshop.model.Address">
+    insert into address (adid, uid, address, 
+      phone, name, state)
+    values (#{adid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springboot.springbootshop.model.Address">
+    insert into address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adid != null">
+        adid,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adid != null">
+        #{adid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springboot.springbootshop.model.Address">
+    update address
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where adid = #{adid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springboot.springbootshop.model.Address">
+    update address
+    set uid = #{uid,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR}
+    where adid = #{adid,jdbcType=INTEGER}
+  </update>
+</mapper>
