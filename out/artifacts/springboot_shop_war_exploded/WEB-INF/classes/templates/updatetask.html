@@ -1,0 +1,75 @@
+
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8"> 
+<title>Bootstrap</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">    
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</head>
+<div class="container-fluid">
+	<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+		
+		<form:form modelAttribute="task" method="post" action="/Work/task/updatetask">
+			<table class="table table-bordered table-hover">
+				<thead>
+					<tr>
+					<form:hidden path="id" value="${task.id }"  />
+						<th>
+							新增工作任务
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>任务标题</td>
+						<td>
+							<form:input path="title"  value="${task.title }" />
+						</td>
+					</tr>
+					<tr class="success">
+						<td>
+							任务详情
+						</td>
+						<td>
+							<form:input path="describe1"  value="${task.describe1 }"  />
+						</td>
+					</tr>
+					<tr class="error">
+						<td>
+							完成
+						</td>
+						<td>
+							<form:input path="result"  value="${task.result }" />
+						</td>
+					</tr>
+					<tr class="error">
+						<td>
+							起始时间
+						</td>
+						<td>
+							<form:input path="up_time"  value="${task.up_time }" />
+						</td>
+					</tr>
+					<tr class="error">
+						<td>
+							截止时间
+						</td>
+						<td>
+							<form:input path="down_time"  value="${task.down_time }" />
+						</td>
+					</tr>
+					
+					<tr>
+					  <td><input value="添加" type="submit"></td>
+					</tr>
+					
+				</tbody>
+			</table>
+			</form:form>
+		</div>
+	</div>
+</div>
+</html>

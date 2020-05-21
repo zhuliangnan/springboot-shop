@@ -1,6 +1,7 @@
 package com.springboot.springbootshop.service.impl;
 
 import com.springboot.springbootshop.mapper.OrdersMapper;
+import com.springboot.springbootshop.model.OrderUser;
 import com.springboot.springbootshop.model.Orders;
 import com.springboot.springbootshop.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,11 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public List<Orders> selectByState(Integer state) {
         return ordersMapper.selectByState(state);
+    }
+
+    @Override
+    public OrderUser selectOrderAndUserByOid(Integer oid) {
+        return ordersMapper.selectOrderAndUserByOid(oid);
     }
 
     @Override

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.springbootshop.mapper.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.springboot.springbootshop.model.Goods">
+    <id column="gid" jdbcType="INTEGER" property="gid" />
+    <result column="goodsname" jdbcType="VARCHAR" property="goodsname" />
+    <result column="sales" jdbcType="INTEGER" property="sales" />
+    <result column="secondclassify" jdbcType="VARCHAR" property="secondclassify" />
+    <result column="add_time" jdbcType="VARCHAR" property="addTime" />
+    <result column="picture1" jdbcType="VARCHAR" property="picture1" />
+    <result column="picture2" jdbcType="VARCHAR" property="picture2" />
+    <result column="picture3" jdbcType="VARCHAR" property="picture3" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="goodstate" jdbcType="INTEGER" property="goodstate" />
+    <result column="shopid" jdbcType="INTEGER" property="shopid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    gid, goodsname, sales, secondclassify, add_time, picture1, picture2, picture3, `describe`,
+    sid, goodstate, shopid
+  </sql>
+
+
+
+
+
+  <!-- 根据shopid查询商品 使用SQL -->
+  <select id="getAllGoodsBySecondClassify" resultType="com.springboot.springbootshop.model.Goods" parameterType="java.lang.String">
+		select *
+		from goods
+		where secondclassify = #{secondclassify}
+	</select>
+
+  <!-- 根据shopid查询商品 使用SQL -->
+  <select id="getAllGoodsByshopid" resultType="com.springboot.springbootshop.model.Goods" parameterType="java.lang.Integer">
+		select *
+		from goods
+		where shopid = #{shopid}
+	</select>
+
+  <!-- 分页使用SQL -->
+  <select id="getAllGoodsByPage" resultType="com.springboot.springbootshop.model.Goods">
+		select * from goods where #{goodstate}=goodstate limit #{startRow},#{pageSize}
+	</select>
+
+
+
+  <select id="getAllGoods" resultType="com.springboot.springbootshop.model.Goods">
+		select * from goods where #{goodstate}=goodstate
+	</select>
+
+
+
+  <!-- 模糊查询 使用SQL -->
+  <select id="getAllGoodsLike" resultType="com.springboot.springbootshop.model.Goods">
+		select * from goods where goodsname like CONCAT('%',#{search},'%') and  #{goodstate}=goodstate
+	</select>
+
+  <!-- 分页+模糊查询 使用SQL -->
+  <select id="getAllGoodsByPageLike" resultType="com.springboot.springbootshop.model.Goods">
+		select * from goods where #{goodstate}=goodstate and goodsname like CONCAT('%',#{search},'%') limit
+		#{startRow},#{pageSize}
+	</select>
+
+  <!-- 根据gid查询商品 使用SQL -->
+  <select id="getGoodsByGid" resultType="com.springboot.springbootshop.model.Goods" parameterType="java.lang.Integer">
+		select *
+		from goods
+		where gid = #{gid,jdbcType=INTEGER}
+	</select>
+
+
+
+
+  <!-- 根据goodsname查询商品 使用SQL -->
+  <select id="getGoodsByGoodsname" resultType="com.springboot.springbootshop.model.Goods"
+          parameterType="java.lang.String">
+		select *
+		from goods
+		where goodsname = #{goodsname}
+	</select>
+
+
+  <!-- 根据gid查询商品详细 使用SQL -->
+  <select id="getDetailByGid" resultType="com.springboot.springbootshop.model.Detail" parameterType="java.lang.Integer">
+		select *
+		from detail
+		where gid = #{gid,jdbcType=INTEGER}
+	</select>
+
+
+
+  <!-- 根据modelandcolor查询商品详细 使用SQL -->
+  <select id="getDetailByModelandColor" resultType="com.springboot.springbootshop.model.Detail">
+		select *
+		from detail
+		where model = #{model} and color=#{color} and
+		gid=#{gid}
+	</select>
+
+
+  <!-- 根据gid查询商品全部评价 使用SQL -->
+  <select id="getCommentByGid" resultType="com.springboot.springbootshop.model.Comment">
+		select *
+		from
+		comment
+		where gid = #{gid}
+	</select>
+
+  <!-- 根据gid state 查询商品评价 使用SQL -->
+  <select id="getCommentByGidandState" resultType="com.springboot.springbootshop.model.Comment">
+		select *
+		from comment
+		where gid = #{gid} and state=#{state1} or state=#{state2}
+	</select>
+
+
+
+  <insert id="addshoucang">
+
+		insert into shoucang(uid,gid) values (#{uid},#{gid})
+	</insert>
+
+
+
+
+
+  <!-- 以下是逆向工程自动生成的代码 -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where gid = #{gid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods
+    where gid = #{gid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springboot.springbootshop.model.Goods">
+    insert into goods (gid, goodsname, sales, 
+      secondclassify, add_time, picture1, 
+      picture2, picture3, `describe`,
+      sid, goodstate, shopid
+      )
+    values (#{gid,jdbcType=INTEGER}, #{goodsname,jdbcType=VARCHAR}, #{sales,jdbcType=INTEGER}, 
+      #{secondclassify,jdbcType=VARCHAR}, #{addTime,jdbcType=VARCHAR}, #{picture1,jdbcType=VARCHAR}, 
+      #{picture2,jdbcType=VARCHAR}, #{picture3,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, 
+      #{sid,jdbcType=INTEGER}, #{goodstate,jdbcType=INTEGER}, #{shopid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springboot.springbootshop.model.Goods">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gid != null">
+        gid,
+      </if>
+      <if test="goodsname != null">
+        goodsname,
+      </if>
+      <if test="sales != null">
+        sales,
+      </if>
+      <if test="secondclassify != null">
+        secondclassify,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="picture1 != null">
+        picture1,
+      </if>
+      <if test="picture2 != null">
+        picture2,
+      </if>
+      <if test="picture3 != null">
+        picture3,
+      </if>
+      <if test="describe != null">
+        `describe`,
+      </if>
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="goodstate != null">
+        goodstate,
+      </if>
+      <if test="shopid != null">
+        shopid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gid != null">
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="sales != null">
+        #{sales,jdbcType=INTEGER},
+      </if>
+      <if test="secondclassify != null">
+        #{secondclassify,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="picture1 != null">
+        #{picture1,jdbcType=VARCHAR},
+      </if>
+      <if test="picture2 != null">
+        #{picture2,jdbcType=VARCHAR},
+      </if>
+      <if test="picture3 != null">
+        #{picture3,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="goodstate != null">
+        #{goodstate,jdbcType=INTEGER},
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.springboot.springbootshop.model.Goods">
+    update goods
+    <set>
+      <if test="goodsname != null">
+        goodsname = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="sales != null">
+        sales = #{sales,jdbcType=INTEGER},
+      </if>
+      <if test="secondclassify != null">
+        secondclassify = #{secondclassify,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="picture1 != null">
+        picture1 = #{picture1,jdbcType=VARCHAR},
+      </if>
+      <if test="picture2 != null">
+        picture2 = #{picture2,jdbcType=VARCHAR},
+      </if>
+      <if test="picture3 != null">
+        picture3 = #{picture3,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        `describe` = #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null">
+        sid = #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="goodstate != null">
+        goodstate = #{goodstate,jdbcType=INTEGER},
+      </if>
+      <if test="shopid != null">
+        shopid = #{shopid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springboot.springbootshop.model.Goods">
+    update goods
+    set goodsname = #{goodsname,jdbcType=VARCHAR},
+      sales = #{sales,jdbcType=INTEGER},
+      secondclassify = #{secondclassify,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=VARCHAR},
+      picture1 = #{picture1,jdbcType=VARCHAR},
+      picture2 = #{picture2,jdbcType=VARCHAR},
+      picture3 = #{picture3,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
+      sid = #{sid,jdbcType=INTEGER},
+      goodstate = #{goodstate,jdbcType=INTEGER},
+      shopid = #{shopid,jdbcType=INTEGER}
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+</mapper>

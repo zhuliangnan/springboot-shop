@@ -198,10 +198,14 @@
   if (address == null ||  address == "") {
    address = "默认地址";
   }
+  if(details == null ||  details == ""){
+   alert("备注信息必填！");
+  }else{
 
-  var oid = [[${orders.oid}]];//oid
 
-  $("#noticPay").click(function () {
+   var oid = [[${orders.oid}]];//oid
+
+
    if(state == 0){
     //对于 oid 这个订单 进行 改变状态 state  还有管理员的消息
 
@@ -211,7 +215,12 @@
 
     alert("该订单不允许这个操作");
    }
-  });
+
+
+
+  }
+
+
 
  }
 </script>
@@ -228,19 +237,25 @@ if (address == null ||  address == "") {
 address = "默认地址";
 }
 
-var oid = [[${orders.oid}]];//oid
 
 
-$("#Deliver").click(function () {
-if(state==1){
-alert("操作成功");
-window.location.href="http://localhost:8080/springboot-web/AdminOperation/"+oid+"/2/"+details+"/"+address;
 
-}else{
-alert("该订单不允许这个操作");
-}
-});
 
+ if(details == null ||  details == ""){
+  alert("备注信息必填！");
+ }else {
+
+  var oid = [[${orders.oid}]];//oid
+
+  if (state == 1) {
+   alert("操作成功");
+   window.location.href = "http://localhost:8080/springboot-web/AdminOperation/" + oid + "/2/" + details + "/" + address;
+
+  } else {
+   alert("该订单不允许这个操作");
+  }
+
+ }
 
 }
 </script>
@@ -258,17 +273,22 @@ alert("该订单不允许这个操作");
    address = "默认地址";
   }
 
-  var oid = [[${orders.oid}]];//oid
+  if(details == null ||  details == ""){
+   alert("备注信息必填！");
+  }else {
+   var oid = [[${orders.oid}]];//oid
 
-  $("#checkback").click(function () {
-   if(state==4001){
+
+   if (state == 4001) {
     alert("操作成功");
-    window.location.href="http://localhost:8080/springboot-web/AdminOperation/"+oid+"/4003/"+details+"/"+address;
+    window.location.href = "http://localhost:8080/springboot-web/AdminOperation/" + oid + "/4003/" + details + "/" + address;
 
-   }else{
+   } else {
     alert("该订单不允许这个操作");
    }
-  });
+
+  }
+
 
  }
 </script>
@@ -286,18 +306,23 @@ alert("该订单不允许这个操作");
    address = "默认地址";
   }
 
-  var oid = [[${orders.oid}]];//oid
+  if(details == null ||  details == ""){
+   alert("备注信息必填！");
+  }else {
+   var oid = [[${orders.oid}]];//oid
 
 
-  $("#checkrollback").click(function () {
-   if(state==4002){
+   if (state == 4002) {
     alert("操作成功");
-    window.location.href="http://localhost:8080/springboot-web/AdminOperation/"+oid+"/4003/"+details+"/"+address;
+    window.location.href = "http://localhost:8080/springboot-web/AdminOperation/" + oid + "/4003/" + details + "/" + address;
 
-   }else{
+   } else {
     alert("该订单不允许这个操作");
-   };
-  });
+   }
+
+
+  }
+
 
 
  }
@@ -317,17 +342,23 @@ alert("该订单不允许这个操作");
    address = "默认地址";
   }
 
-  var oid = [[${orders.oid}]];//oid
 
-  $("#noticcomment").click(function () {
-   if(state==3){
+  if(details == null ||  details == ""){
+   alert("备注信息必填！");
+  }else {
+   var oid = [[${orders.oid}]];//oid
+
+
+   if (state == 3) {
     alert("操作成功");
-    window.location.href="http://localhost:8080/springboot-web/AdminOperation/"+oid+"/3/"+details+"/"+address;
+    window.location.href = "http://localhost:8080/springboot-web/AdminOperation/" + oid + "/3/" + details + "/" + address;
 
-   }else{
+   } else {
     alert("该订单不允许这个操作");
    }
-  });
+
+  }
+
 
  }
 </script>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.springbootshop.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.springboot.springbootshop.model.User">
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="question" jdbcType="VARCHAR" property="question" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="res_time" jdbcType="VARCHAR" property="resTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uid, nickname, password, image, email, question, answer, res_time
+  </sql>
+
+  <!--这里是 个人中心的方法-->
+
+
+  <!-- 根据ID查询用户 -->
+  <select id="getUserByUid" resultType="com.springboot.springbootshop.model.User">
+SELECT  * FROM  user where uid =#{uid}
+</select>
+
+  <!-- 修改密码 -->
+  <update id="uppsd">
+UPDATE user  SET   password =#{password} WHERE  uid = #{uid}
+</update>
+
+  <!-- 设置密保问题 -->
+  <update id="upQuestion">
+UPDATE user  SET   question =#{question},answer=#{answer} WHERE  uid = #{uid}
+</update>
+
+
+  <!-- 查询所有收货地址 -->
+  <select id="showaddress" resultType="com.springboot.springbootshop.model.Address">
+SELECT  * FROM  address where uid =#{uid}
+</select>
+
+
+  <!-- 删除地址 -->
+  <delete id="deladdress">
+delete  from address where adid=#{adid}
+</delete>
+
+
+  <!-- 添加地址 -->
+  <insert id="adaddress">
+insert into address(adid,uid,address,phone,name,state) VALUES
+(#{adid},#{uid},#{address},#{phone},#{name},#{state})
+</insert>
+
+
+  <!-- 根据ID查询地址 -->
+  <select id="getAdByAdid" resultType="com.springboot.springbootshop.model.Address">
+SELECT  * FROM  address where adid =#{adid}
+</select>
+
+
+  <!-- 修改地址 -->
+  <update id="upadd">
+UPDATE address  SET   address =#{address},phone=#{phone},name=#{name} WHERE  adid = #{adid}
+</update>
+
+
+  <!-- 模糊查询地址 -->
+  <select id="select" resultType="com.springboot.springbootshop.model.Address">
+SELECT  * FROM  address where name like '%${name}%' and uid = #{uid}
+</select>
+
+
+  <!-- 查询所有订单 -->
+  <select id="showorders" resultType="com.springboot.springbootshop.model.Orders">
+SELECT  * FROM  orders where uid =#{uid}
+</select>
+
+
+  <!-- 订单付款 -->
+  <update id="fukuan">
+UPDATE orders  SET   state =1 WHERE  oid=#{oid}
+</update>
+
+
+  <!-- 订单提醒发货 -->
+  <update id="tixing">
+UPDATE orders  SET   state =2 WHERE  oid=#{oid}
+</update>
+
+
+  <!-- 删除订单 -->
+  <delete id="deldd">
+delete  from orders where oid=#{oid}
+</delete>
+
+  <!-- 模糊查询订单 -->
+  <select id="select2" resultType="com.springboot.springbootshop.model.Orders">
+SELECT  * FROM  orders where goodsname like '%${goodsname}%' and uid=#{uid}
+</select>
+
+  <!--这里是 个人中心的方法-->
+
+
+
+
+  <insert id="insert" parameterType="com.springboot.springbootshop.model.User">
+    insert into user (uid, nickname, password,
+      image, email, question,
+      answer, res_time)
+    values (#{uid,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{image,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR},
+      #{answer,jdbcType=VARCHAR}, #{resTime,jdbcType=VARCHAR})
+  </insert>
+
+
+  <select id="selectUserByName" resultType="com.springboot.springbootshop.model.User"  >
+        select * from user  where nickname=#{nickname}
+     </select>
+
+
+  <select id="selectUserByNameAndPassword" resultType="com.springboot.springbootshop.model.User"  >
+        select * from user  where nickname=#{nickname} and  password=#{password}
+     </select>
+
+  <select id="selectUserByEmail" resultType="com.springboot.springbootshop.model.User"  >
+        select * from user  where email=#{email}
+     </select>
+
+
+  <update id="updateUserByEmailAndPassword">
+		update user set password=#{password} where  email=#{email}
+
+	</update>
+
+
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.springboot.springbootshop.model.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="question != null">
+        question,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="resTime != null">
+        res_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="question != null">
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="resTime != null">
+        #{resTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springboot.springbootshop.model.User">
+    update user
+    <set>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="question != null">
+        question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="resTime != null">
+        res_time = #{resTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springboot.springbootshop.model.User">
+    update user
+    set nickname = #{nickname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      question = #{question,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      res_time = #{resTime,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+</mapper>

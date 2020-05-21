@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.springbootshop.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.springboot.springbootshop.model.Comment">
+    <id column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="gid" jdbcType="INTEGER" property="gid" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="up_date" jdbcType="TIMESTAMP" property="upDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    cid, gid, comment, state, picture, up_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from comment
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from comment
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.springboot.springbootshop.model.Comment">
+    insert into comment (cid, gid, comment, 
+      state, picture, up_date
+      )
+    values (#{cid,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR}, #{upDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springboot.springbootshop.model.Comment">
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="gid != null">
+        gid,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+      <if test="upDate != null">
+        up_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null">
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="upDate != null">
+        #{upDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springboot.springbootshop.model.Comment">
+    update comment
+    <set>
+      <if test="gid != null">
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="upDate != null">
+        up_date = #{upDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springboot.springbootshop.model.Comment">
+    update comment
+    set gid = #{gid,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      picture = #{picture,jdbcType=VARCHAR},
+      up_date = #{upDate,jdbcType=TIMESTAMP}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

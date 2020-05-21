@@ -1,5 +1,9 @@
 package com.springboot.springbootshop.controller;
 
+import com.springboot.springbootshop.model.OrderUser;
+import com.springboot.springbootshop.model.User;
+import com.springboot.springbootshop.service.OrdersService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +23,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class hello {
 
-    @RequestMapping("/boot")
-    public String hellospringbbot(){
-        return  "Admin_goodslist";
+    @Autowired
+    private OrdersService ordersService;
 
+    @RequestMapping("/boot")
+    public void test1to1(){
+
+        OrderUser orderUser;
+
+         orderUser = ordersService.selectOrderAndUserByOid(121);
+        System.out.println(orderUser.toString());
 
     }
 

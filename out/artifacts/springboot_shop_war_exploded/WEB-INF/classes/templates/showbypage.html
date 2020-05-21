@@ -1,0 +1,481 @@
+<!doctype html >
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta name="Generator" content="EditPlus®">
+<meta name="Author" content="">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<meta name="renderer" content="webkit">
+<title>歪秀购物</title>
+
+<link rel="shortcut icon" type="image/x-icon" href="/springboot-web/theme/icon/favicon.ico">
+<link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/base.css">
+<link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/home.css">
+	<script type="text/javascript" src="/springboot-web/theme/js/jquery.js"></script>
+	<script type="text/javascript" src="/springboot-web/theme/js/index.js"></script>
+	<script type="text/javascript" src="/springboot-web/theme/js/js-tab.js"></script>
+	<script type="text/javascript" src="/springboot-web/theme/js/MSClass.js"></script>
+<!--	<script type="text/javascript" src="/springboot-web/theme/js/jcarousellite.js"></script>-->
+	<script type="text/javascript" src="/springboot-web/theme/js/top.js"></script>
+	<script type="text/javascript">
+		var intDiff = parseInt(80000);//倒计时总秒数量
+		function timer(intDiff){
+			window.setInterval(function(){
+				var day=0,
+						hour=0,
+						minute=0,
+						second=0;//时间默认值
+				if(intDiff > 0){
+					day = Math.floor(intDiff / (60 * 60 * 24));
+					hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+					minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+					second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+				}
+				if (minute <= 9) minute = '0' + minute;
+				if (second <= 9) second = '0' + second;
+
+				$('#hour_show').html('<s id="h"></s>'+hour+'');
+				$('#minute_show').html('<s></s>'+minute+'');
+				$('#second_show').html('<s></s>'+second+'');
+				intDiff--;
+			}, 1000);
+		}
+
+		$(function(){
+			timer(intDiff);
+		});
+	</script>
+
+
+<script type="text/javascript">  
+     function cart(obj){  
+ 
+      var matchResult=true;  
+      if(obj==0){  
+            alert("您的购物车没有商品请添加后继续");  
+            event.preventDefault();
+            matchResult=false;  
+            return matchResult;
+      }
+  
+      return matchResult;  
+     }  
+   </script> 
+
+</head>
+<body>
+
+<div>
+	<div id="moquu_wxin" class="moquu_wxin"><a href="javascript:void(0)"><div class="moquu_wxinh"></div></a></div>
+	<div id="moquu_wshare" class="moquu_wshare"><a href="javascript:void(0)" style="text-indent:0"><div class="moquu_wshareh"><img src="/springboot-web/theme/icon/moquu_wshare.png" width="100%"></div></a></div>
+	<div id="moquu_wmaps"><a href="javascript:void(0)" class='moquu_wmaps'></a></div>
+	<a id="moquu_top" href="javascript:void(0)"></a>
+</div>
+
+	<!--- header begin-->
+	<header id="pc-header">
+		<div class="BHeader">
+			<div class="yNavIndex">
+				<ul class="BHeaderl">
+					<li>
+						<div th:if="${session.existUser}==null">
+							<a href="/springboot-web/Login" style="color:#ea7bde;">请登录</a>
+						</div>
+
+					</li>
+
+					<li>
+						<div th:if="${session.existUser}!=null">
+							<em style="color:#ea3ca5;" th:text="${session.existUser.nickname}" >您好:默认用户 </em>
+						</div>
+
+					</li>
+
+					<li>
+						<div th:if="${session.existUser}!=null">
+							<a href="/springboot-web/RemoveLogin"><em style="color:#ea3345;">退出</em></a>
+						</div>
+                   </li>
+					<li class="headerul">|</li>
+					<li><a href="register.html">免费注册</a> </li>
+					<li class="headerul">|</li>
+					<li><a href="my-d.html">订单查询</a> </li>
+					<li class="headerul">|</li>
+					<li><a href="my-s.html">我的收藏</a> </li>
+					<li class="headerul">|</li>
+					<li id="pc-nav" class="menu"><a href="my-user.html" class="tit">我的商城</a>
+						<div class="subnav">
+							<a href="/springboot-web/PersonalCenter" >个人中心</a>
+							<a href="/springboot-web/OrdersManagement" >订单管理</a>
+							<a href="/springboot-web/AddressManagement">地址管理</a>
+						</div>
+					</li>
+					<li class="headerul">|</li>
+					<li id="pc-nav1" class="menu"><a href="#" class="tit M-iphone">手机悦商城</a>
+						<div class="subnav">
+							<a href="#"><img src="/springboot-web/theme/icon/ewm.png" width="115" height="115" title="扫一扫，有惊喜！"></a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="container clearfix">
+			<div class="header-logo fl">
+				<h1>
+					<a th:href="@{/Showbypage/{page}(page=1)}"><img src="/springboot-web/theme/icon/logo.png"></a>
+				</h1>
+			</div>
+			<div class="head-form fl">
+				<form class="clearfix" action="search">
+					<input type="text" class="search-text" accesskey="" id="key"
+						autocomplete="off" placeholder="手机模型">
+					<button class="button" type="submit"
+						onClick="search('key');return false;">搜索</button>
+				</form>
+				<div class="words-text clearfix">
+					<a href="#" class="red">1元秒爆</a> <a href="#">低至五折</a> <a href="#">农用物资</a>
+					<a href="#">买一赠一</a> <a href="#">佳能相机</a> <a href="#">稻香村月饼</a> <a
+						href="#">服装城</a>
+				</div>
+			</div>
+			<div class="header-cart fr">
+				<a href="/springboot-web/Showallcart" onclick="cart(${cartListSize})">
+					<img src="/springboot-web/theme/icon/car.png">
+				</a>
+				<i class="head-amount" th:text="${cartListSize}">0</i>
+			</div>
+			<div class="head-mountain"></div>
+		</div>
+		<div class="yHeader">
+			<div class="yNavIndex">
+				<div class="pullDown">
+					<h2 class="pullDownTitle">全部商品分类</h2>
+				</div>
+				<ul class="yMenuIndex">
+					<li><a href="" target="_blank">服装城</a></li>
+					<li><a href="" target="_blank">美妆馆</a></li>
+					<li><a href="" target="_blank">美食</a></li>
+					<li><a href="" target="_blank">全球购</a></li>
+					<li><a href="" target="_blank">闪购</a></li>
+					<li><a href="" target="_blank">团购</a></li>
+					<li><a href="" target="_blank">拍卖</a></li>
+					<li><a href="" target="_blank">金融</a></li>
+					<li><a href="" target="_blank">智能</a></li>
+				</ul>
+			</div>
+		</div>
+	</header>
+	<!-- header End -->
+
+	<div class="containers">
+		<div class="pc-nav-item">
+			<a href="#">全部分类 </a> &gt; <a href="#">手机</a>
+		</div>
+	</div>
+
+	<div class="containers clearfix">
+		<div class="fl">
+			<!--<div id="firstpane" class="menu_list">
+				<h2>所有类目</h2>
+				<h3 class="menu_head current">进口食品</h3>
+				<div style="display: block" class="menu_body">
+					<a href="#">冲调饮品</a> <a href="#">糖果/巧克力</a>
+				</div>
+				<h3 class="menu_head">营养健康</h3>
+				<div style="display: none" class="menu_body">
+					<a href="#">营养健康</a> <a href="#">营养健康</a> <a href="#">营养健康</a>
+				</div>
+
+				<h3 class="menu_head">粮油调味</h3>
+				<div style="display: none" class="menu_body">
+					<a href="#">粮油调味</a> <a href="#">粮油调味</a> <a href="#">粮油调味</a> <a
+						href="#">粮油调味</a>
+				</div>
+			</div>-->
+		</div>
+		<div class="pc-info fr">
+			<div class="pc-term">
+				<dl class="pc-term-dl clearfix">
+					<dt>品牌：</dt>
+					<dd>
+						<font size="3px"><a href="#">家用电器</a></font>
+					</dd>
+					<dd>
+						<font size="3px"><a href="#">手机数码</a></font>
+					</dd>
+					<dd>
+						<font size="3px"><a href="#">电脑办公</a></font>
+					</dd>
+					<dd>
+						<font size="3px"><a href="#">家居家装</a></font>
+					</dd>
+					<dd>
+						<font size="3px"><a href="#">男装女装</a></font>
+					</dd>
+					<dd>
+						<font size="3px"><a href="#">个护化妆</a></font>
+					</dd>
+					<dd>
+						<font size="3px"><a href="#">运动户外</a></font>
+					</dd>
+					<dd>
+						<font size="3px"><a href="#">箱包钟表</a></font>
+					</dd>
+					<dd>
+						<font size="3px"><a href="#">汽车用品</a></font>
+					</dd>
+					<dd>
+						<font size="3px"><a href="#">玩具乐器</a></font>
+					</dd>
+
+				</dl>
+
+				<a href="#">更多</a>
+			</div>
+
+			<div class="pc-line"></div>
+			<div class="pc-search clearfix">
+				<div class="fl pc-search-in">
+
+					<form action="/springboot-web/Search/1/手机">
+						<input type="text" id="search" th:value="${session.search}" name="search" placeholder="手机" class="pc-search-w">
+						<button type="submit" class="pc-search-a" style="width: 85px;">搜索</button>
+					</form>
+
+				</div>
+				<div class="fr pc-with">
+					相关搜索： <a href="#">黑糖</a><em>|</em><a href="#">姜茶</a><em>|</em><a
+						href="#">红印黑糖</a><em>|</em><a href="#">黑糖话梅</a><em>|</em><a
+						href="#">黑糖姜母</a><em>|</em><a href="#">茶黑糖饼</a><em>|</em><a
+						href="#">干黑糖</a><em>|</em><a href="#">沙琪玛</a>
+				</div>
+			</div>
+		</div>
+		<div class="pc-term">
+			<div class="clearfix pc-search-p">
+				<div class="fl pc-search-e">
+					<a href="#" class="cur">销量</a><a href="#">价格</a><a href="#">评价</a><a
+						href="#">上架时间</a>
+				</div>
+				<div class="fr pc-search-v">
+					<ul>
+						<li><input type="checkbox"><a href="#">有货</a></li>
+						<li><input type="checkbox"><a href="#">限时抢购</a></li>
+						<li><input type="checkbox"><a href="#">满减大促</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="pc-search-i"></div>
+		</div>
+		<div class="time-border-list pc-search-list clearfix">
+			<ul class="clearfix">
+
+
+					<li th:each="goods:${GoodsList}">
+
+						<a th:href="@{/Detail/{gid}(gid=${goods.gid})}">
+							<img th:src="@{/theme/img/phone/{picture}.jpg(picture=${goods.picture1})}" style="width: 213px; height: 213px;">
+						</a>
+						<p class="head-name">
+							<a href="#"><span th:text="${goods.goodsname}">默认手机名称</span>32,64,128G内存版 移动4G手机金属边框</a>
+						</p>
+						<p>
+							<span class="price">￥2300.00-￥3000.00</span>
+						</p>
+						<p class="head-futi clearfix">
+							<span class="fl">好评度：90% </span> <span class="fr"><span th:text="${goods.sales}">默认购买人数</span>人购买</span>
+						</p>
+						<p class="clearfix">
+							<a th:href="@{/ToAddCart/{gid}/{page}(gid=${goods.gid},page=${currentPage})}">
+							<span  class="label-default fl" style="font-size: 6px;hight:50px;">加入购物</span>
+							</a>
+							<a th:href="@{/Shoucang/{gid}/{page}(gid=${goods.gid},page=${currentPage})}" class="fr pc-search-c" >收藏</a>
+						</p>
+					</li>
+
+
+			</ul>
+
+
+			<div class="clearfix">
+				<div class="fr pc-search-g">
+					<div th:if="${currentPage == 1}">
+						<a class="fl pc-search-f" href="#">上一页</a>
+                   </div>
+					<div th:if="${currentPage != 1 and search==null}">
+						<a class="pc-search-n" th:href="@{/Showbypage/{page}(page=${currentPage-1})}">上一页</a>
+					</div>
+
+					<div th:if="${currentPage != 1 and search!=null}">
+						<a class="pc-search-n" th:href="@{/Search/{page}/{search}(page=${currentPage-1},search=${session.search})}">上一页</a>
+					</div>
+
+
+
+
+
+
+                    <div th:each="i:${pageTimes}" >
+
+					<div th:if="${currentPage == i }">
+						<a class="current" th:text="${i}" >等于当前要显示的页面，这个标签要特殊显示</a>
+					</div>
+
+					<div th:if="${currentPage != i and search==null}">
+						<a  th:href="@{/Showbypage/{page}(page=${i})}" th:text="${i}">正常显示</a>
+					</div>
+
+					<div th:if="${currentPage != i and search!=null}">
+						<a  th:href="@{/Search/{page}/{search}(page=${i},search=${session.search})}" th:text="${i}">正常显示</a>
+					</div>
+
+
+                    </div>
+                  <!--  <%
+                    }
+                    %>-->
+
+
+					<div th:if="${currentPage == pageTimeNumber}">
+						<a class="fl pc-search-f" href="#">下一页</a>
+					</div>
+
+					<div th:if="${currentPage != pageTimeNumber and search==null}">
+						<a  th:href="@{/Showbypage/{page}(page=${currentPage+1})}" class="pc-search-n" >下一页>></a>
+					</div>
+
+					<div th:if="${currentPage != pageTimeNumber and search!=null}">
+						<a  th:href="@{/Search/{page}/{search}(page=${currentPage+1},search=${session.search})}" class="pc-search-n" >下一页>></a>
+					</div>
+
+
+
+					<span class="pc-search-y">
+						<form action="/springboot-web/SearchByPage">
+							<em> 共</em><em th:text="${pageTimes.size()}" >10</em><em>页 到第</em> <input type="text"
+								class="pc-search-j" placeholder="1" name="searchpage"> <em>页</em>
+
+							<button class="confirm" type="submit"
+								style="width: 50px; height: 25px;">确定</button>
+						</form>
+					</span>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+	</div>
+	<!--- footer begin-->
+	<div class="aui-footer-bot">
+		<div class="time-lists aui-footer-pd clearfix">
+			<div class="aui-footer-list clearfix">
+				<h4>
+					<span><img
+						src="/springboot-web/theme/icon/icon-d1.png"></span>
+					<em>消费者权益</em>
+				</h4>
+				<ul>
+					<li><a href="#">保障范围 </a></li>
+					<li><a href="#">退货退款流程</a></li>
+					<li><a href="#">服务中心 </a></li>
+					<li><a href="#">服务中心</a></li>
+					<li><a href="#"> 更多特色服务 </a></li>
+				</ul>
+			</div>
+			<div class="aui-footer-list clearfix">
+				<h4>
+					<span><img
+						src="/springboot-web/theme/icon/icon-d2.png"></span>
+					<em>新手上路</em>
+				</h4>
+				<ul>
+					<li><a href="#">退货退款流程</a></li>
+					<li><a href="#">服务中心 </a></li>
+					<li><a href="#">服务中心</a></li>
+					<li><a href="#"> 更多特色服务 </a></li>
+				</ul>
+			</div>
+			<div class="aui-footer-list clearfix">
+				<h4>
+					<span><img
+						src="/springboot-web/theme/icon/icon-d3.png"></span>
+					<em>保障正品</em>
+				</h4>
+				<ul>
+					<li><a href="#">退货退款流程</a></li>
+					<li><a href="#">服务中心 </a></li>
+					<li><a href="#">服务中心</a></li>
+					<li><a href="#"> 更多特色服务 </a></li>
+				</ul>
+			</div>
+			<div class="aui-footer-list clearfix">
+				<h4>
+					<span><img
+						src="/springboot-web/theme/icon/icon-d1.png"></span>
+					<em>消费者权益</em>
+				</h4>
+				<ul>
+					<li><a href="#">退货退款流程</a></li>
+					<li><a href="#">服务中心 </a></li>
+					<li><a href="#">服务中心</a></li>
+					<li><a href="#"> 更多特色服务 </a></li>
+				</ul>
+			</div>
+		</div>
+		<div style="border-bottom: 1px solid #dedede"></div>
+		<div class="time-lists aui-footer-pd time-lists-ls clearfix">
+			<div class="aui-footer-list clearfix">
+				<h4>购物指南</h4>
+				<ul>
+					<li><a href="#">保障范围 </a></li>
+					<li><a href="#">购物流程</a></li>
+					<li><a href="#">会员介绍 </a></li>
+					<li><a href="#">生活旅行</a></li>
+					<li><a href="#"> 常见问题 </a></li>
+					<li><a href="#"> 联系客服购物指南 </a></li>
+				</ul>
+			</div>
+			<div class="aui-footer-list clearfix">
+				<h4>特色服务</h4>
+				<ul>
+					<li><a href="#">退货退款流程</a></li>
+					<li><a href="#">服务中心 </a></li>
+					<li><a href="#">服务中心</a></li>
+					<li><a href="#"> 更多特色服务 </a></li>
+					<li><a href="#"> 更多特色服务 </a></li>
+					<li><a href="#"> 更多特色服务 </a></li>
+					<li><a href="#"> 更多特色服务 </a></li>
+				</ul>
+			</div>
+			<div class="aui-footer-list clearfix">
+				<h4>帮助中心</h4>
+				<ul>
+					<li><a href="#">退货退款流程</a></li>
+					<li><a href="#">退货退款流程</a></li>
+					<li><a href="#">退货退款流程</a></li>
+					<li><a href="#">退货退款流程</a></li>
+					<li><a href="#">服务中心 </a></li>
+					<li><a href="#">服务中心</a></li>
+					<li><a href="#"> 更多特色服务 </a></li>
+				</ul>
+			</div>
+			<div class="aui-footer-list clearfix">
+				<h4>新手指导</h4>
+				<ul>
+					<li><a href="#">退货退款流程</a></li>
+					<li><a href="#">退货退款流程</a></li>
+					<li><a href="#">服务中心 </a></li>
+					<li><a href="#">服务中心</a></li>
+					<li><a href="#">服务中心</a></li>
+					<li><a href="#"> 更多特色服务 </a></li>
+					<li><a href="#"> 更多特色服务 </a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- footer End -->
+</body>
+</html>

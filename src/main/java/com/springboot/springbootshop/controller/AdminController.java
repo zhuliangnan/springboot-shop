@@ -481,6 +481,7 @@ public class AdminController {
         if(sate1 != -1 && addname.equals("全查")){
             //按照状态查找
             logger.info("按照状态查找");
+
             List<Orders> ordersList = ordersService.selectByState(sate1);
             model.addAttribute("ordersList", ordersList);
             return "order_list";

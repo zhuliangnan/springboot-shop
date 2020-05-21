@@ -1,0 +1,392 @@
+<!doctype html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+ <head>
+	<meta charset="UTF-8">
+	<meta name="Generator" content="EditPlus®">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+	<meta name="renderer" content="webkit">
+    <meta content="歪秀购物, 购物, 大家电, 手机" name="keywords">
+    <meta content="歪秀购物，购物商城。" name="description">
+	<title>会员系统我的评价</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/springboot-web/theme/icon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/base.css">
+	<link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/member.css">
+     <link rel="stylesheet" type="text/css" href="/springboot-web/theme/css/starrating.css">
+     <script type="text/javascript" src="/springboot-web/theme/js/satrt.js"></script>
+
+
+     <!--<script type="text/javascript" src="theme/js/jquery-2.1.0.min.js"></script>-->
+     <script src="http://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
+
+     <script type="text/javascript">
+         function PostComment(){
+             var comment=$("#textareaComment").val();
+
+             //alert("评价分数"+document.getElementById("score").value);
+             $.ajax(
+                 {
+                     url :"http://localhost:8080/springboot-web/CommentOrder/"+comment+"/"+[[${Order.oid}]],
+                     data :{"score":document.getElementById("score").value},
+                     type: "POST",
+                     async:false,
+                     datatype:"json",
+                     success: function (data)
+                     {
+                         if(data=="1111"){
+                             alert("评价成功");
+                             window.location.href="http://localhost:8080/springboot-web/OrdersManagement";
+                         }else{
+
+                             alert("评价失败");
+                         }
+
+
+                     } ,
+                     error: function(data){
+                         alert("评价错误") ;
+                     }
+                 });
+            // window.open("/curriculum/curriculumSearch?name="+comment,"_self");
+
+         }
+
+
+
+     </script>
+
+
+
+ </head>
+ <body>
+
+<!--- header begin-->
+<header id="pc-header">
+    <div class="BHeader">
+        <div class="yNavIndex">
+            <ul class="BHeaderl">
+
+                <li>
+                    <div th:if="${session.existUser}==null">
+                        <a href="/springboot-web/Login" style="color:#ea7bde;">请登录</a>
+                    </div>
+
+                </li>
+
+                <li>
+                    <div th:if="${session.existUser}!=null">
+                        <em style="color:#ea3ca5;" th:text="${session.existUser.nickname}" >您好:默认用户 </em>
+                    </div>
+
+                </li>
+
+                <li>
+                    <div th:if="${session.existUser}!=null">
+                        <a href="/springboot-web/RemoveLogin"><em style="color:#ea3345;">退出</em></a>
+                    </div>
+                </li>
+                <li class="headerul">|</li>
+                <li><a href="register.html">免费注册</a> </li>
+                <li class="headerul">|</li>
+                <li><a href="my-d.html">订单查询</a> </li>
+                <li class="headerul">|</li>
+                <li><a href="my-s.html">我的收藏</a> </li>
+                <li class="headerul">|</li>
+                <li id="pc-nav" class="menu"><a href="my-user.html" class="tit">我的商城</a>
+                    <div class="subnav">
+                        <a href="/springboot-web/PersonalCenter" >个人中心</a>
+                        <a href="/springboot-web/OrdersManagement" >订单管理</a>
+                        <a href="/springboot-web/AccountSecurity">账户安全</a>
+
+                    </div>
+                </li>
+                <li class="headerul">|</li>
+                <li id="pc-nav1" class="menu"><a href="#" class="tit M-iphone">手机悦商城</a>
+                    <div class="subnav">
+                        <a href="#"><img src="/springboot-web/theme/icon/ewm.png" width="115" height="115" title="扫一扫，有惊喜！"></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container clearfix">
+        <div class="header-logo fl"><h1><a th:href="@{/Showbypage/{page}(page=1)}"><img src="/springboot-web/theme/icon/logo.png"></a> </h1></div>
+        <div class="member-title fl"><h2></h2></div>
+        <div class="head-form fl">
+            <!--  <form class="clearfix">
+                <input type="text" class="search-text" accesskey="" id="key" autocomplete="off"  placeholder="洗衣机">
+                <button class="button" onClick="search('key');return false;">搜索</button>
+            </form>
+            -->
+            <div class="words-text clearfix">
+                <a href="#" class="red">1元秒爆</a>
+                <a href="#">低至五折</a>
+                <a href="#">农用物资</a>
+                <a href="#">买一赠一</a>
+                <a href="#">佳能相机</a>
+                <a href="#">稻香村月饼</a>
+                <a href="#">服装城</a>
+            </div>
+        </div>
+        <!--   <div class="header-cart fr">
+               <a href="/springboot-web/Showallcart" onclick="cart(${cartListSize})">
+                   <img src="/springboot-web/theme/icon/car.png">
+               </a>
+               <i class="head-amount" th:text="${cartListSize}">0</i>
+           </div>-->
+    </div>
+</header>
+<!-- header End -->
+
+<div class="containers"><div class="pc-nav-item"><a href="#">首页</a> &gt; <a href="#">会员中心 </a> &gt; <a href="#">商城快讯</a></div></div>
+
+<!-- 商城快讯 begin -->
+<section id="member">
+    <div class="member-center clearfix">
+        <div class="member-left fl">
+            <div class="member-apart clearfix">
+                <div class="fl"><a href="#"><img th:src="@{/theme/user/{picture}.jpg(picture=${session.existUser.image})}"></a></div>
+                <div class="fl">
+                    <p>用户名：</p>
+                    <p th:if="${session.existUser.nickname}!=null"><em style="color:#ea1f59;" th:text="${session.existUser.nickname}" >您好:默认用户 </em></p>
+                    <p>邮箱：</p>
+                    <p th:if="${session.existUser.email}!=null"><em style="color:#ea1f59;" th:text="${session.existUser.email}" >您好:默认邮箱 </em></p>
+                </div>
+            </div>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <div class="member-lists">
+                <dl>
+                    <dt>我的商城</dt>
+                    dd><a href="/springboot-web/OrdersManagement">我的订单</a></dd>
+                    <dd><a href="#">我的收藏</a></dd>
+                    <dd><a href="/springboot-web/PersonalCenter">账户安全</a></dd>
+                    <dd class="cur"><a href="#">我的评价</a></dd>
+                    <dd><a href="#">地址管理</a></dd>
+                </dl>
+                <dl>
+                    <dt>客户服务</dt>
+                    <dd><a href="#">退货申请</a></dd>
+                    <dd><a href="#">退货/退款记录</a></dd>
+                </dl>
+                <dl>
+                    <dt>我的消息</dt>
+                    <dd><a href="#">商城快讯</a></dd>
+                    <dd><a href="#">帮助中心</a></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="member-right fr">
+            <div class="member-head">
+                <div class="member-heels fl"><h2>我的评价</h2></div>
+            </div>
+            <div class="member-border">
+               <div class="member-column clearfix">
+                   <span class="co1">商品信息</span>
+                   <span class="co2">购买时间</span>
+                   <span class="co3">评价状态</span>
+               </div>
+               <div class="member-class clearfix">
+                   <ul>
+                       <li class="clearfix">
+                           <div class="sp1">
+                               <span class="gr1"><a href="#"><img th:src="@{/theme/img/phone/{picture}.jpg(picture=${Order.picture})}"  style="width: 60px; height: 60px;"></a></span>
+                               <span class="gr2"><a href="#"><span th:text="${Order.goodsname}">华为p30</span>(I939I)<span th:text="${Order.color}">颜色</span> <span th:text="${Order.model}">电信4G手机</span> 双卡双待经典 </a></span>
+                               <span class="gr3">X<span th:text="${Order.number}">1</span></span>
+                           </div>
+                           <div class="sp2"><span th:text="${Order.upTime}">2015 - 09 -  02</span></div>
+                           <div class="sp3"><a href="#" onclick="PostComment()">发表评价</a> </div>
+                       </li>
+                   </ul>
+               </div>
+                <input type="text" style="display: none"  id="score" />
+               <div class="member-setup clearfix">
+                   <ul>
+                       <li class="clearfix">
+                           <div class="member-score fl"><i class="reds">*</i>点击星星打分：</div>
+                           <!--隐藏表单用来获取分数 js在satrt.js里面-->
+
+                           <div id="star">
+                               <ul>
+                                   <li><a href="javascript:;">1</a></li>
+                                   <li><a href="javascript:;">2</a></li>
+                                   <li><a href="javascript:;">3</a></li>
+                                   <li><a href="javascript:;">4</a></li>
+                                   <li><a href="javascript:;">5</a></li>
+                               </ul>
+                               <span></span>
+                               <p></p>
+                           </div>
+                           <div class="member-judge fr"><input type="checkbox"> 匿名评价</div>
+                       </li>
+
+                       <li class="clearfix">
+                           <div class="member-score fl"><i class="reds">*</i>商品评价：</div>
+                           <div class="member-star fl">
+                               <textarea id="textareaComment" maxlength="200"></textarea>
+                           </div>
+                       </li>
+                       <li class="clearfix">
+                           <div class="member-score fl">晒单：</div>
+                           <div class="member-star fl">
+                               <a href="#"><img th:src="@{/theme/img/phone/{picture}.jpg(picture=${Order.picture})}"  style="width: 60px; height: 60px;"></a>
+                               <a href="#"><img src="/springboot-web/theme/img/pd/m2.png"></a>
+
+                           </div>
+                       </li>
+                      <!-- <li class="clearfix">
+                           <div style="padding-left:85px;">最多可以增加<i class="reds">10</i>张</div>
+                       </li>-->
+                   </ul>
+               </div>
+               
+      <!--          <div class="member-pages clearfix">
+                    <div class="fr pc-search-g">
+                        <a class="fl pc-search-f" href="#">上一页</a>
+                        <a href="#" class="current">1</a>
+                        <a href="javascript:;">2</a>
+                        <a href="javascript:;">3</a>
+                        <a href="javascript:;">4</a>
+                        <a href="javascript:;">5</a>
+                        <a href="javascript:;">6</a>
+                        <a href="javascript:;">7</a>
+                        <span class="pc-search-di">…</span>
+                        <a title="使用方向键右键也可翻到下一页哦！" class="pc-search-n" href="javascript:;" onClick="SEARCH.page(3, true)">下一页</a>
+                    <span class="pc-search-y">
+                        <em>  共20页    到第</em>
+                        <input type="text" class="pc-search-j" placeholder="1">
+                        <em>页</em>
+                        <a href="#" class="confirm">确定</a>
+                    </span>
+
+                    </div>
+                </div>-->
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 商城快讯 End -->
+
+<!--- footer begin-->
+<div class="aui-footer-bot">
+    <div class="time-lists aui-footer-pd clearfix">
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="/springboot-web/theme/icon/icon-d1.png"></span>
+                <em>消费者权益</em>
+            </h4>
+            <ul>
+                <li><a href="#">保障范围 </a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="/springboot-web/theme/icon/icon-d2.png"></span>
+                <em>新手上路</em>
+            </h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="/springboot-web/theme/icon/icon-d3.png"></span>
+                <em>保障正品</em>
+            </h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="/springboot-web/theme/icon/icon-d1.png"></span>
+                <em>消费者权益</em>
+            </h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+    </div>
+    <div style="border-bottom:1px solid #dedede"></div>
+    <div class="time-lists aui-footer-pd time-lists-ls clearfix">
+        <div class="aui-footer-list clearfix">
+            <h4>购物指南</h4>
+            <ul>
+                <li><a href="#">保障范围 </a> </li>
+                <li><a href="#">购物流程</a> </li>
+                <li><a href="#">会员介绍 </a> </li>
+                <li><a href="#">生活旅行</a> </li>
+                <li><a href="#"> 常见问题 </a> </li>
+                <li><a href="#"> 联系客服购物指南 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>特色服务</h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>帮助中心</h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>新手指导</h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- footer End -->
+</body>
+</html>

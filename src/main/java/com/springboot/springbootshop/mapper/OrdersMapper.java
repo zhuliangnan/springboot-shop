@@ -1,5 +1,6 @@
 package com.springboot.springbootshop.mapper;
 
+import com.springboot.springbootshop.model.OrderUser;
 import com.springboot.springbootshop.model.Orders;
 import org.apache.ibatis.annotations.Param;
 
@@ -39,6 +40,9 @@ public interface OrdersMapper {
 
 
     List<Orders> selectByState(@Param("state")Integer state);
+
+
+    OrderUser selectOrderAndUserByOid(@Param("oid")Integer oid);
 
 
 
