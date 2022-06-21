@@ -98,7 +98,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.43</version>
+            <version>8.0.28</version>
         </dependency>
 
         <!--spring-boot的热部署插件配置 这样在修改了代码服务器不用重启也能自己加载修改内容
